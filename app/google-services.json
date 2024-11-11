@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "750488191608",
+    "project_id": "coba-2db4c",
+    "storage_bucket": "coba-2db4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750488191608:android:11423648a6be43af96e38d",
+        "android_client_info": {
+          "package_name": "com.fahri.ppdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750488191608-k39ch1h7vd0bgg332890rcbhmks9lbee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fahri.ppdb",
+            "certificate_hash": "d4256f3129453a659e88b7218c0a292ac587058e"
+          }
+        },
+        {
+          "client_id": "750488191608-86tmdpsb2d1gopkd8dgg9g0fo1iallsn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQlljzHMb1yxro8hPnGVS6fIxWClVoOIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750488191608-86tmdpsb2d1gopkd8dgg9g0fo1iallsn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
