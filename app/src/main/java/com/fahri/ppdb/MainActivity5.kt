@@ -72,7 +72,7 @@ class MainActivity5 : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Handle possible errors
+                    // jika error
                 }
             })
         }
