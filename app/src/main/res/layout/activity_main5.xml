@@ -7,4 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity5">
 
+    <!-- LinearLayout untuk menampung TextView yang berisi data -->
+    <LinearLayout
+        android:id="@+id/dataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- TextView dinamis akan ditambahkan di sini -->
+    </LinearLayout>
 </ScrollView>

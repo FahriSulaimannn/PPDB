@@ -76,10 +76,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity4::class.java)
             startActivity(intent)
         }
+
+        val cv4: View = findViewById(R.id.Cv4)
+        cv4.setOnClickListener {
+            val intent = Intent(this, MainActivity5::class.java)
+            startActivity(intent)
+        }
     }
 
     // Override fungsi onBackPressed untuk konfirmasi keluar
     override fun onBackPressed() {
+        super.onBackPressed()
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Apakah kamu yakin untuk keluar?")
             .setCancelable(false)
