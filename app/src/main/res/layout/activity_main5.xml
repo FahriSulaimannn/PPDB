@@ -12,8 +12,285 @@
         android:id="@+id/dataContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvBack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="5"
+                    android:layout_margin="15dp"
+                    android:clickable="true"
+                    app:cardCornerRadius="15dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_arrow_back_24"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Data Formulir Siswa"
+                    android:textSize="30sp"
+                    android:fontFamily="@font/poppins_semibold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="25dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama lengkap siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor NISN siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/nisn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor NIK siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/nik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jenis kelamin siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/kelamin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tempat dan tanggal lahir siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tempat_tanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama orangtua/wali siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/ortu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat lengkap siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/alamat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kota/Kabupaten :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/kota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No. Telp./HP. :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/telp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Asal sekolah siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/asal_sekolah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Agama siswa :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/agama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nilai Bahasa Indonesia :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/indo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nilai Bahasa Inggris :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/inggris"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nilai Matematika :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/matematika"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nilai Ilmu Pengetahuan Alam (IPA) :"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/ipa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fahri"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <!-- TextView dinamis akan ditambahkan di sini -->
     </LinearLayout>

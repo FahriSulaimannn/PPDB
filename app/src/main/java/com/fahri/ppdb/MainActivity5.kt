@@ -1,7 +1,6 @@
 package com.fahri.ppdb
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +25,22 @@ class MainActivity5 : AppCompatActivity() {
             insets
         }
 
-        val dataContainer = findViewById<LinearLayout>(R.id.dataContainer)
+        // Initialize TextViews for each field
+        val nama = findViewById<TextView>(R.id.nama)
+        val nisn = findViewById<TextView>(R.id.nisn)
+        val nik = findViewById<TextView>(R.id.nik)
+        val kelamin = findViewById<TextView>(R.id.kelamin)
+        val tempatTanggal = findViewById<TextView>(R.id.tempat_tanggal)
+        val ortu = findViewById<TextView>(R.id.ortu)
+        val alamat = findViewById<TextView>(R.id.alamat)
+        val kota = findViewById<TextView>(R.id.kota)
+        val telp = findViewById<TextView>(R.id.telp)
+        val asalSekolah = findViewById<TextView>(R.id.asal_sekolah)
+        val agama = findViewById<TextView>(R.id.agama)
+        val indo = findViewById<TextView>(R.id.indo)
+        val inggris = findViewById<TextView>(R.id.inggris)
+        val matematika = findViewById<TextView>(R.id.matematika)
+        val ipa = findViewById<TextView>(R.id.ipa)
 
         // Get the currently logged-in user's UID
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -39,20 +53,22 @@ class MainActivity5 : AppCompatActivity() {
             // Fetch data from Firebase
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Clear previous data
-                    dataContainer.removeAllViews()
-
-                    // Loop through all the children and add them as TextViews
-                    for (dataSnapshot in snapshot.children) {
-                        val data = dataSnapshot.key + ": " + dataSnapshot.getValue(String::class.java)
-                        if (data != null) {
-                            val textView = TextView(this@MainActivity5)
-                            textView.text = data
-                            textView.textSize = 18f
-                            textView.setPadding(0, 10, 0, 10)
-                            dataContainer.addView(textView)
-                        }
-                    }
+                    // Map Firebase data to each TextView based on the field name
+                    nama.text = snapshot.child("name").getValue(String::class.java) ?: "N/A"
+                    nisn.text = snapshot.child("nisn").getValue(String::class.java) ?: "N/A"
+                    nik.text = snapshot.child("nik").getValue(String::class.java) ?: "N/A"
+                    kelamin.text = snapshot.child("gender").getValue(String::class.java) ?: "N/A"
+                    tempatTanggal.text = "${snapshot.child("birthPlace").getValue(String::class.java) ?: "N/A"}, ${snapshot.child("birthdate").getValue(String::class.java) ?: "N/A"}"
+                    ortu.text = snapshot.child("parentName").getValue(String::class.java) ?: "N/A"
+                    alamat.text = snapshot.child("address").getValue(String::class.java) ?: "N/A"
+                    kota.text = snapshot.child("city").getValue(String::class.java) ?: "N/A"
+                    telp.text = snapshot.child("phone").getValue(String::class.java) ?: "N/A"
+                    asalSekolah.text = snapshot.child("schoolOrigin").getValue(String::class.java) ?: "N/A"
+                    agama.text = snapshot.child("religion").getValue(String::class.java) ?: "N/A"
+                    indo.text = snapshot.child("nilaiIndo").getValue(String::class.java) ?: "N/A"
+                    inggris.text = snapshot.child("nilaiIng").getValue(String::class.java) ?: "N/A"
+                    matematika.text = snapshot.child("nilaiMat").getValue(String::class.java) ?: "N/A"
+                    ipa.text = snapshot.child("nilaiIPA").getValue(String::class.java) ?: "N/A"
                 }
 
                 override fun onCancelled(error: DatabaseError) {
