@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity5">
+    tools:context=".MainActivity5"
+    android:background="#F9F7F7">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
 
     <LinearLayout
         android:id="@+id/dataContainer"
@@ -16,13 +22,17 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:cardCornerRadius="50dp"
+            android:layout_marginTop="-50dp"
+            android:backgroundTint="#112D4E">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:layout_marginTop="50dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvBack"
@@ -44,7 +54,9 @@
                     android:layout_height="wrap_content"
                     android:text="Data Formulir Siswa"
                     android:textSize="30sp"
-                    android:fontFamily="@font/poppins_semibold"/>
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textAlignment="center"
+                    android:textColor="#F9F7F7"/>
 
             </LinearLayout>
 
@@ -54,13 +66,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            app:cardCornerRadius="25dp">
+            app:cardCornerRadius="25dp"
+            android:backgroundTint="#3F72AF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="25dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -293,4 +306,15 @@
 
         <!-- TextView dinamis akan ditambahkan di sini -->
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/download_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download PDF"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#112D4E"/>
+</FrameLayout>

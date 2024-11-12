@@ -82,6 +82,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity5::class.java)
             startActivity(intent)
         }
+
+        val cv5: View = findViewById(R.id.Cv5)
+        cv5.setOnClickListener {
+            val intent = Intent(this, tatacara::class.java)
+            startActivity(intent)
+        }
     }
 
     // Override fungsi onBackPressed untuk konfirmasi keluar
