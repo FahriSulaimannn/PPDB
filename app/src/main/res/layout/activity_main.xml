@@ -17,76 +17,142 @@
             android:layout_height="match_parent"
             app:cardCornerRadius="20dp"
             android:backgroundTint="#0D145B"
-            android:layout_margin="15dp">
+            android:layout_marginTop="-25dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="13dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_weight="2">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:text="Selamat Datang  di"
+                        android:layout_marginStart="5dp"
                         android:textColor="#FFFFFF" />
+
+
+
+                    <TextView
+                        android:id="@+id/greeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PPDB SMA KurniaAbadi"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginStart="5dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/greeting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PPDB SMA KurniaAbadi"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                <ImageView
+                    android:id="@+id/account"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/profile"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewRunningText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="20dp"
-            android:backgroundTint="#0D145B"
-            android:layout_margin="15dp">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/errorColor"
+            app:cardElevation="4dp">
+
+            <TextView
+                android:id="@+id/runningText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="13dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/full_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Selamat Datang  di"
-                        android:textColor="#FFFFFF" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PPDB SMA KurniaAbadi"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginStart="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="Welcome to our application! This text will scroll continuously across the screen."
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
         </androidx.cardview.widget.CardView>
+
+
+
+        <!--        <androidx.cardview.widget.CardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:cardCornerRadius="20dp"-->
+<!--            android:backgroundTint="#0D145B"-->
+<!--            android:layout_margin="15dp">-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_margin="13dp"-->
+<!--                android:orientation="vertical">-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/full_name"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:text="Selamat Datang  di"-->
+<!--                        android:textColor="#FFFFFF" />-->
+
+<!--                </LinearLayout>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/email"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="PPDB SMA KurniaAbadi"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold"/>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
+
+    <!-- Bagian atas dengan latar belakang merah gelap untuk menampilkan tanggal hutang -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3F51B5"
+            android:padding="10dp"
+            android:text="Menu Pendaftaran"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,117 +161,106 @@
             android:layout_marginRight="16dp"
             android:weightSum="3"
             android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
-                android:id="@+id/Cv1"
-                android:layout_weight="1"
+                android:id="@+id/lokasi"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:clickable="true"
+                android:layout_margin="5dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="3dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/Iv1"
-                        android:layout_centerInParent="true"
-                        android:text="Lokasi"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/Iv1"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/Cv2"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/Iv2"
-                        android:layout_centerInParent="true"
-                        android:text="Daya Tampung"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/Iv2"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"/>
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/Cv3"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/locicon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/Iv3"
-                        android:layout_centerInParent="true"
-                        android:text="Jadwal"
-                        android:textStyle="bold" />
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:text="Alamat Sekolah"
+                        android:textAlignment="center"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/peringkat"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/Iv3"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true" />
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logoschool" />
 
-                </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Layanan Tambahan"
+                        android:textAlignment="center"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/statistik"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logoschool" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Layanan Tambahan"
+                        android:textAlignment="center"
+                        android:textStyle="bold"/>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 
@@ -222,115 +277,105 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/Cv4"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:clickable="true"
+                android:layout_margin="5dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="3dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/Iv4"
-                        android:layout_centerInParent="true"
-                        android:text="Hasil Seleksi"
-                        android:textAlignment="center"
-                        android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/Iv4"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/Cv5"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/formicon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/Iv5"
-                        android:layout_centerInParent="true"
-                        android:text="Aturan dan Prosedur"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:text="Data Formulir Siswa"
                         android:textAlignment="center"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Cv5"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:layout_margin="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/Iv5"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true" />
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/tutoricon" />
 
-                </RelativeLayout>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+                        android:text="Cara Mendaftar"
+                        android:textAlignment="center"
+                        android:textStyle="bold"/>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/Cv6"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="5dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:clickable="true"
+                android:layout_margin="5dp"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="3dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="3dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/logoschool" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/Iv6"
-                        android:layout_centerInParent="true"
-                        android:text="Statistik"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/Iv6"
-                        android:layout_width="120dp"
-                        android:layout_height="90dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true" />
-
-
-                </RelativeLayout>
-
+                        android:layout_gravity="center"
+                        android:text="Layanan Tambahan"
+                        android:textAlignment="center"
+                        android:textStyle="bold"/>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
@@ -367,6 +412,7 @@
                         android:id="@+id/Iv7"
                         android:layout_width="120dp"
                         android:layout_height="90dp"
+                        android:src="@drawable/daftaricon"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
@@ -376,6 +422,8 @@
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"
@@ -384,13 +432,13 @@
             android:textStyle="bold"
             android:layout_marginLeft="15dp"/>
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:layout_margin="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+<!--        <Button-->
+<!--            android:id="@+id/btn_logout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Logout"-->
+<!--            android:layout_margin="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
 
     </LinearLayout>
 

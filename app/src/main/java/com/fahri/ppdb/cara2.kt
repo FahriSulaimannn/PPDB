@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.cardview.widget.CardView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,17 +39,17 @@ class cara2 : Fragment() {
         val view = inflater.inflate(R.layout.fragment_cara2, container, false)
 
         // Tombol untuk kembali ke fragment sebelumnya
-        view.findViewById<Button>(R.id.backButton).setOnClickListener {
+        view.findViewById<CardView>(R.id.backButton).setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
         // Tombol untuk pindah ke fragment berikutnya
-//        view.findViewById<Button>(R.id.nextButton).setOnClickListener {
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer, ThirdFragment())
-//                .addToBackStack(null)
-//                .commit()
-//        }
+        view.findViewById<Button>(R.id.nextButton).setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, cara3())
+                .addToBackStack(null)
+                .commit()
+        }
 
         return view
     }

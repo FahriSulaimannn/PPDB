@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.cardview.widget.CardView
-import org.checkerframework.common.subtyping.qual.Bottom
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +15,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [cara1.newInstance] factory method to
+ * Use the [cara2.newInstance] factory method to
  * create an instance of this fragment.
  */
-class cara1 : Fragment() {
+class cara8 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,17 +36,17 @@ class cara1 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_cara1, container, false)
+        val view = inflater.inflate(R.layout.fragment_cara8, container, false)
 
-        // Tombol untuk kembali ke fragment sebelumnya menggunakan CardView
+        // Tombol untuk kembali ke fragment sebelumnya
         view.findViewById<CardView>(R.id.backButton).setOnClickListener {
-            activity?.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
 
-        // Set up the button click listener for nextButton (Button)
+//        // Tombol untuk pindah ke fragment berikutnya
         view.findViewById<Button>(R.id.nextButton).setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, cara2())
+                .replace(R.id.fragmentContainer, cara9())
                 .addToBackStack(null)
                 .commit()
         }
@@ -63,12 +62,12 @@ class cara1 : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment cara1.
+         * @return A new instance of fragment cara2.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            cara1().apply {
+            cara2().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

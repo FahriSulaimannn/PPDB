@@ -26,7 +26,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1. Persiapkan Data Diri Calon Siswa"
+        android:text="9. Datang ke Sekolah untuk Daftar Ulang"
         android:textStyle="bold"
         android:textSize="25sp"
         android:textAlignment="center"
@@ -38,17 +38,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textView"
-        android:src="@drawable/persiapkan"
+        android:src="@drawable/kesekolah"
         android:layout_marginTop="50dp"/>
 
     <Button
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lanjut"
+        android:text="Daftar sekarang"
         android:layout_marginBottom="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
