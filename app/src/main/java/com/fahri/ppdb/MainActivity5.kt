@@ -77,27 +77,38 @@ class MainActivity5 : AppCompatActivity() {
 
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    nama.text = snapshot.child("name").getValue(String::class.java) ?: "N/A"
-                    nisn.text = snapshot.child("nisn").getValue(String::class.java) ?: "N/A"
-                    nik.text = snapshot.child("nik").getValue(String::class.java) ?: "N/A"
-                    kelamin.text = snapshot.child("gender").getValue(String::class.java) ?: "N/A"
-                    tempatTanggal.text = "${snapshot.child("birthPlace").getValue(String::class.java) ?: "N/A"}, ${snapshot.child("birthdate").getValue(String::class.java) ?: "N/A"}"
-                    ortu.text = snapshot.child("parentName").getValue(String::class.java) ?: "N/A"
-                    alamat.text = snapshot.child("address").getValue(String::class.java) ?: "N/A"
-                    kota.text = snapshot.child("city").getValue(String::class.java) ?: "N/A"
-                    telp.text = snapshot.child("phone").getValue(String::class.java) ?: "N/A"
-                    asalSekolah.text = snapshot.child("schoolOrigin").getValue(String::class.java) ?: "N/A"
-                    agama.text = snapshot.child("religion").getValue(String::class.java) ?: "N/A"
-                    indo.text = snapshot.child("nilaiIndo").getValue(String::class.java) ?: "N/A"
-                    inggris.text = snapshot.child("nilaiIng").getValue(String::class.java) ?: "N/A"
-                    matematika.text = snapshot.child("nilaiMat").getValue(String::class.java) ?: "N/A"
-                    ipa.text = snapshot.child("nilaiIPA").getValue(String::class.java) ?: "N/A"
+                    // Mengecek nilai status terlebih dahulu
+                    val status = snapshot.child("status").getValue(String::class.java)
+
+                    if (status == "approve") {
+                        // Tampilkan data hanya jika status adalah "approve"
+                        nama.text = snapshot.child("name").getValue(String::class.java) ?: "N/A"
+                        nisn.text = snapshot.child("nisn").getValue(String::class.java) ?: "N/A"
+                        nik.text = snapshot.child("nik").getValue(String::class.java) ?: "N/A"
+                        kelamin.text = snapshot.child("gender").getValue(String::class.java) ?: "N/A"
+                        tempatTanggal.text = "${snapshot.child("birthPlace").getValue(String::class.java) ?: "N/A"}, ${snapshot.child("birthdate").getValue(String::class.java) ?: "N/A"}"
+                        ortu.text = snapshot.child("parentName").getValue(String::class.java) ?: "N/A"
+                        alamat.text = snapshot.child("address").getValue(String::class.java) ?: "N/A"
+                        kota.text = snapshot.child("city").getValue(String::class.java) ?: "N/A"
+                        telp.text = snapshot.child("phone").getValue(String::class.java) ?: "N/A"
+                        asalSekolah.text = snapshot.child("schoolOrigin").getValue(String::class.java) ?: "N/A"
+                        agama.text = snapshot.child("religion").getValue(String::class.java) ?: "N/A"
+                        indo.text = snapshot.child("nilaiIndo").getValue(String::class.java) ?: "N/A"
+                        inggris.text = snapshot.child("nilaiIng").getValue(String::class.java) ?: "N/A"
+                        matematika.text = snapshot.child("nilaiMat").getValue(String::class.java) ?: "N/A"
+                        ipa.text = snapshot.child("nilaiIPA").getValue(String::class.java) ?: "N/A"
+                    } else {
+                        // Jika status belum approve, beri pesan atau tangani sesuai kebutuhan
+                        Toast.makeText(this@MainActivity5, "Data belum di-approve dan tidak dapat ditampilkan.", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Handle possible errors
+                    // Menangani error
+                    Toast.makeText(this@MainActivity5, "Gagal memuat data: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
+
         }
     }
 

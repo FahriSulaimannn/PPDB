@@ -86,7 +86,7 @@
                     android:id="@+id/nama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -101,7 +101,7 @@
                     android:id="@+id/nisn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -116,7 +116,7 @@
                     android:id="@+id/nik"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -131,7 +131,7 @@
                     android:id="@+id/kelamin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -146,7 +146,7 @@
                     android:id="@+id/tempat_tanggal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -161,7 +161,7 @@
                     android:id="@+id/ortu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -176,7 +176,7 @@
                     android:id="@+id/alamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -191,7 +191,7 @@
                     android:id="@+id/kota"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -206,7 +206,7 @@
                     android:id="@+id/telp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -221,7 +221,7 @@
                     android:id="@+id/asal_sekolah"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -236,7 +236,7 @@
                     android:id="@+id/agama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -251,7 +251,7 @@
                     android:id="@+id/indo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -266,7 +266,7 @@
                     android:id="@+id/inggris"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -281,7 +281,7 @@
                     android:id="@+id/matematika"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -296,7 +296,7 @@
                     android:id="@+id/ipa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fahri"
+                    android:text=""
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 

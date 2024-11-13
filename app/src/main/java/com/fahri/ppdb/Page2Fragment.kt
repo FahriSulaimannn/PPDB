@@ -58,7 +58,23 @@ class Page2Fragment : Fragment() {
         val btnSubmit = view.findViewById<Button>(R.id.btn_submit)
         val cvBack = view.findViewById<CardView>(R.id.cvBack)
 
+        // Memulihkan data dari ViewModel dan menampilkan di EditText
+        etNilaiIndo.setText(formViewModel.nilaiIndo.value)
+        etNilaiIng.setText(formViewModel.nilaiIng.value)
+        etNilaiMat.setText(formViewModel.nilaiMat.value)
+        etNilaiIPA.setText(formViewModel.nilaiIPA.value)
+        etLinkFoto2.setText(formViewModel.driveLink2.value)
+
+        // Menyimpan data ke ViewModel saat input berubah
+        etNilaiIndo.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIndo))
+        etNilaiIng.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIng))
+        etNilaiMat.addTextChangedListener(createTextWatcher(formViewModel::setNilaiMat))
+        etNilaiIPA.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIPA))
+        etLinkFoto2.addTextChangedListener(createTextWatcher(formViewModel::setDriveLink2))
+
         cvBack.setOnClickListener {
+            // Sebelum kembali, simpan data ke formViewModel
+            saveInputToViewModel()
             activity?.onBackPressed()  // Kembali ke halaman sebelumnya
         }
 
@@ -99,6 +115,26 @@ class Page2Fragment : Fragment() {
         })
 
         return view
+    }
+
+    // Fungsi untuk menyimpan data ke ViewModel
+    private fun saveInputToViewModel() {
+        formViewModel.nilaiIndo.value = view?.findViewById<EditText>(R.id.et_nilaiIndo)?.text.toString()
+        formViewModel.nilaiIng.value = view?.findViewById<EditText>(R.id.et_nilaiIng)?.text.toString()
+        formViewModel.nilaiMat.value = view?.findViewById<EditText>(R.id.et_nilaiMat)?.text.toString()
+        formViewModel.nilaiIPA.value = view?.findViewById<EditText>(R.id.et_nilaiIPA)?.text.toString()
+        formViewModel.driveLink2.value = view?.findViewById<EditText>(R.id.et_linkfoto2)?.text.toString()
+    }
+
+    // Fungsi untuk membuat TextWatcher untuk setiap EditText
+    private fun createTextWatcher(setter: (String) -> Unit): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                setter(s.toString())
+            }
+        }
     }
 
     private fun validateFields(vararg fields: EditText): Boolean {
@@ -164,12 +200,10 @@ class Page2Fragment : Fragment() {
                     "Foto Ijazah dan Sertifikat: ${formViewModel.driveLink2.value}\n\n" +
                     "Apakah data sudah benar?")
 
-        // If user clicks "Yes", proceed to submit data to Firebase
         builder.setPositiveButton("Ya") { _, _ ->
             submitDataToFirebase()
         }
 
-        // If user clicks "No", dismiss the dialog and stay on the form
         builder.setNegativeButton("Tidak") { dialog, _ ->
             dialog.dismiss()
         }
@@ -187,7 +221,7 @@ class Page2Fragment : Fragment() {
             val database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").reference
             val userRef = database.child("users").child(userId)
 
-            // Siapkan data yang ingin disimpan
+            // Siapkan data yang ingin disimpan dengan status awal "pending"
             val userData = mapOf(
                 "name" to formViewModel.name.value,
                 "nisn" to formViewModel.nisn.value,
@@ -206,24 +240,31 @@ class Page2Fragment : Fragment() {
                 "nilaiIng" to formViewModel.nilaiIng.value,
                 "nilaiMat" to formViewModel.nilaiMat.value,
                 "nilaiIPA" to formViewModel.nilaiIPA.value,
-                "driveLink2" to formViewModel.driveLink2.value
+                "driveLink2" to formViewModel.driveLink2.value,
+                "status" to "pending" // Tambahkan status awal sebagai "pending"
             )
 
             // Simpan data ke Firebase
             userRef.setValue(userData)
                 .addOnSuccessListener {
-                    // Berhasil menyimpan data
                     Toast.makeText(context, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
+                    navigateToNextFragment()  // Pindah ke fragment berikutnya
                 }
                 .addOnFailureListener { exception ->
-                    // Gagal menyimpan data
                     Log.e("FirebaseError", "Gagal menyimpan data: ${exception.localizedMessage}")
                     Toast.makeText(context, "Gagal menyimpan data: ${exception.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
         } else {
-            // Jika tidak ada UID (user belum login), tampilkan error
             Toast.makeText(context, "Pengguna tidak terdeteksi!", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun navigateToNextFragment() {
+        val nextFragment = Page3Fragment() // Ganti dengan fragment tujuan berikutnya
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, Page3Fragment())
+            .addToBackStack(null)
+            .commit()
     }
 
 

@@ -61,4 +61,25 @@ class FormViewModel : ViewModel() {
             }
     }
 
+    fun setNilaiIndo(nilai: String) {
+        nilaiIndo.value = nilai
+    }
+
+    fun setNilaiIng(nilai: String) {
+        nilaiIng.value = nilai
+    }
+
+    fun setNilaiMat(nilai: String) {
+        nilaiMat.value = nilai
+    }
+
+    fun setNilaiIPA(nilai: String) {
+        nilaiIPA.value = nilai
+    }
+
+    fun setDriveLink2(link: String) {
+        driveLink2.value = link
+    }
+
+
 }
