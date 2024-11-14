@@ -10,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -54,7 +58,8 @@ class Page2Fragment : Fragment() {
         val etNilaiIng = view.findViewById<EditText>(R.id.et_nilaiIng)
         val etNilaiMat = view.findViewById<EditText>(R.id.et_nilaiMat)
         val etNilaiIPA = view.findViewById<EditText>(R.id.et_nilaiIPA)
-        val etLinkFoto2 = view.findViewById<EditText>(R.id.et_linkfoto2)
+        val etfotoSertif = view.findViewById<EditText>(R.id.et_fotoIjazah)
+        val etfotoIjazah = view.findViewById<EditText>(R.id.et_fotoSertif)
         val btnSubmit = view.findViewById<Button>(R.id.btn_submit)
         val cvBack = view.findViewById<CardView>(R.id.cvBack)
 
@@ -63,14 +68,16 @@ class Page2Fragment : Fragment() {
         etNilaiIng.setText(formViewModel.nilaiIng.value)
         etNilaiMat.setText(formViewModel.nilaiMat.value)
         etNilaiIPA.setText(formViewModel.nilaiIPA.value)
-        etLinkFoto2.setText(formViewModel.driveLink2.value)
+        etfotoIjazah.setText(formViewModel.driveIjazah.value)
+        etfotoSertif.setText(formViewModel.driveSertif.value)
 
         // Menyimpan data ke ViewModel saat input berubah
         etNilaiIndo.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIndo))
         etNilaiIng.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIng))
         etNilaiMat.addTextChangedListener(createTextWatcher(formViewModel::setNilaiMat))
         etNilaiIPA.addTextChangedListener(createTextWatcher(formViewModel::setNilaiIPA))
-        etLinkFoto2.addTextChangedListener(createTextWatcher(formViewModel::setDriveLink2))
+        etfotoIjazah.addTextChangedListener(createTextWatcher(formViewModel::setDriveIjazah))
+        etfotoSertif.addTextChangedListener(createTextWatcher(formViewModel::setDriveSertif))
 
         cvBack.setOnClickListener {
             // Sebelum kembali, simpan data ke formViewModel
@@ -86,20 +93,21 @@ class Page2Fragment : Fragment() {
 
         btnSubmit.setOnClickListener {
             // Gunakan validateFields untuk memeriksa apakah ada field yang kosong
-            if (validateFields(etNilaiIndo, etNilaiIng, etNilaiMat, etNilaiIPA, etLinkFoto2)) {
+            if (validateFields(etNilaiIndo, etNilaiIng, etNilaiMat, etNilaiIPA, etfotoIjazah, etfotoSertif)) {
                 // Lanjutkan proses submit jika validasi sukses
                 // Logika submit ke Firebase atau tindakan lain di sini
                 formViewModel.nilaiIndo.value = etNilaiIndo.text.toString()
                 formViewModel.nilaiIng.value = etNilaiIng.text.toString()
                 formViewModel.nilaiMat.value = etNilaiMat.text.toString()
                 formViewModel.nilaiIPA.value = etNilaiIPA.text.toString()
-                formViewModel.driveLink2.value = etLinkFoto2.text.toString()
+                formViewModel.driveIjazah.value = etfotoIjazah.text.toString()
+                formViewModel.driveSertif.value = etfotoSertif.text.toString()
 
                 showConfirmationDialog()
             }
         }
 
-        etLinkFoto2.addTextChangedListener(object : TextWatcher {
+        etfotoIjazah.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -107,9 +115,24 @@ class Page2Fragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
                 if (!googleDrivePattern.matches(s.toString())) {
-                    etLinkFoto2.error = "Masukkan link Google Drive yang valid"
+                    etfotoIjazah.error = "Masukkan link Google Drive yang valid"
                 } else {
-                    etLinkFoto2.error = null
+                    etfotoIjazah.error = null
+                }
+            }
+        })
+
+        etfotoSertif.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
+                if (!googleDrivePattern.matches(s.toString())) {
+                    etfotoSertif.error = "Masukkan link Google Drive yang valid"
+                } else {
+                    etfotoSertif.error = null
                 }
             }
         })
@@ -123,7 +146,8 @@ class Page2Fragment : Fragment() {
         formViewModel.nilaiIng.value = view?.findViewById<EditText>(R.id.et_nilaiIng)?.text.toString()
         formViewModel.nilaiMat.value = view?.findViewById<EditText>(R.id.et_nilaiMat)?.text.toString()
         formViewModel.nilaiIPA.value = view?.findViewById<EditText>(R.id.et_nilaiIPA)?.text.toString()
-        formViewModel.driveLink2.value = view?.findViewById<EditText>(R.id.et_linkfoto2)?.text.toString()
+        formViewModel.driveIjazah.value = view?.findViewById<EditText>(R.id.et_fotoIjazah)?.text.toString()
+        formViewModel.driveSertif.value = view?.findViewById<EditText>(R.id.et_fotoSertif)?.text.toString()
     }
 
     // Fungsi untuk membuat TextWatcher untuk setiap EditText
@@ -177,14 +201,39 @@ class Page2Fragment : Fragment() {
     }
 
     private fun showConfirmationDialog() {
+        // Inflate layout untuk dialog konfirmasi
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_confirmation, null)
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Konfirmasi Data")
-        builder.setMessage(
-                    "Nama Lengakap: ${formViewModel.name.value}\n" +
+        builder.setView(dialogView)
+
+        // Ambil referensi untuk TextView dan ImageView dari layout dialog
+        val imageView1 = dialogView.findViewById<ImageView>(R.id.imageView1)
+        val imageView2 = dialogView.findViewById<ImageView>(R.id.imageView2)
+        val imageView3 = dialogView.findViewById<ImageView>(R.id.imageView3)
+        val imageView4 = dialogView.findViewById<ImageView>(R.id.imageView4)
+        val imageView5 = dialogView.findViewById<ImageView>(R.id.imageView5)
+
+        // Load link Google Drive gambar ke dalam ImageView menggunakan Glide
+        val googleDriveLink1 = formViewModel.driveKK.value
+        val googleDriveLink2 = formViewModel.driveAkta.value
+        val googleDriveLink3 = formViewModel.driveFoto.value
+        val googleDriveLink4 = formViewModel.driveAkta.value
+        val googleDriveLink5 = formViewModel.driveKK.value
+
+        val formattedLink1 = formatGoogleDriveLink(googleDriveLink1)
+        val formattedLink2 = formatGoogleDriveLink(googleDriveLink2)
+        val formattedLink3 = formatGoogleDriveLink(googleDriveLink3)
+        val formattedLink4 = formatGoogleDriveLink(googleDriveLink4)
+        val formattedLink5 = formatGoogleDriveLink(googleDriveLink5)
+
+        // Set text untuk setiap data yang akan dikonfirmasi
+        dialogView.findViewById<TextView>(R.id.tvConfirmationText).text =
+            "Nama Lengkap: ${formViewModel.name.value}\n" +
                     "NISN: ${formViewModel.nisn.value}\n" +
                     "NIK: ${formViewModel.nik.value}\n" +
                     "Jenis Kelamin: ${formViewModel.gender.value}\n" +
-                    "Tanggal Lahi: ${formViewModel.birthdate.value}\n" +
+                    "Tanggal Lahir: ${formViewModel.birthdate.value}\n" +
                     "Tempat Lahir: ${formViewModel.birthPlace.value}\n" +
                     "Nama Orangtua: ${formViewModel.parentName.value}\n" +
                     "Alamat Lengkap: ${formViewModel.address.value}\n" +
@@ -192,13 +241,65 @@ class Page2Fragment : Fragment() {
                     "No. Telp: ${formViewModel.phone.value}\n" +
                     "Asal Sekolah: ${formViewModel.schoolOrigin.value}\n" +
                     "Agama: ${formViewModel.religion.value}\n" +
-                    "Foto KK, Akta, Foto Pribadi: ${formViewModel.driveLink.value}\n" +
                     "Nilai Bahasa Indonesia: ${formViewModel.nilaiIndo.value}\n" +
                     "Nilai Bahasa Inggris: ${formViewModel.nilaiIng.value}\n" +
                     "Nilai Matematika: ${formViewModel.nilaiMat.value}\n" +
-                    "Nilai IPA: ${formViewModel.nilaiIPA.value}\n" +
-                    "Foto Ijazah dan Sertifikat: ${formViewModel.driveLink2.value}\n\n" +
-                    "Apakah data sudah benar?")
+                    "Nilai IPA: ${formViewModel.nilaiIPA.value}"
+
+        if (!formattedLink1.isNullOrEmpty()) {
+            Glide.with(requireContext())
+                .load(formattedLink1)
+                .override(500, 500) // Set ukuran gambar agar sesuai
+                .thumbnail(0.1f) // Load 10% resolusi sebagai preview
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache untuk meningkatkan performa
+                .placeholder(R.drawable.proces) // Gambar sementara
+                .error(R.drawable.cancel) // Gambar error jika gagal
+                .into(imageView1)
+        }
+
+        if (!formattedLink2.isNullOrEmpty()) {
+            Glide.with(requireContext())
+                .load(formattedLink2)
+                .override(500, 500)
+                .thumbnail(0.1f)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.proces)
+                .error(R.drawable.cancel)
+                .into(imageView2)
+        }
+
+        if (!formattedLink3.isNullOrEmpty()) {
+            Glide.with(requireContext())
+                .load(formattedLink3)
+                .override(500, 500)
+                .thumbnail(0.1f)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.proces)
+                .error(R.drawable.cancel)
+                .into(imageView3)
+        }
+
+        if (!formattedLink4.isNullOrEmpty()) {
+            Glide.with(requireContext())
+                .load(formattedLink4)
+                .override(500, 500)
+                .thumbnail(0.1f)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.proces)
+                .error(R.drawable.cancel)
+                .into(imageView4)
+        }
+
+        if (!formattedLink5.isNullOrEmpty()) {
+            Glide.with(requireContext())
+                .load(formattedLink5)
+                .override(500, 500)
+                .thumbnail(0.1f)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.proces)
+                .error(R.drawable.cancel)
+                .into(imageView5)
+        }
 
         builder.setPositiveButton("Ya") { _, _ ->
             submitDataToFirebase()
@@ -209,6 +310,12 @@ class Page2Fragment : Fragment() {
         }
 
         builder.show()
+    }
+
+    private fun formatGoogleDriveLink(driveLink: String?): String? {
+        if (driveLink.isNullOrEmpty()) return null
+        val fileId = driveLink.substringAfter("/file/d/").substringBefore("/view")
+        return if (fileId.isNotEmpty()) "https://drive.google.com/uc?export=view&id=$fileId" else null
     }
 
     private fun submitDataToFirebase() {
@@ -235,12 +342,15 @@ class Page2Fragment : Fragment() {
                 "phone" to formViewModel.phone.value,
                 "schoolOrigin" to formViewModel.schoolOrigin.value,
                 "religion" to formViewModel.religion.value,
-                "driveLink" to formViewModel.driveLink.value,
+                "driveKK" to formViewModel.driveKK.value,
+                "driveAkta" to formViewModel.driveAkta.value,
+                "driveFoto" to formViewModel.driveFoto.value,
                 "nilaiIndo" to formViewModel.nilaiIndo.value,
                 "nilaiIng" to formViewModel.nilaiIng.value,
                 "nilaiMat" to formViewModel.nilaiMat.value,
                 "nilaiIPA" to formViewModel.nilaiIPA.value,
-                "driveLink2" to formViewModel.driveLink2.value,
+                "driveFotoIjazah" to formViewModel.driveIjazah.value,
+                "driveFotoSertif" to formViewModel.driveSertif.value,
                 "status" to "pending" // Tambahkan status awal sebagai "pending"
             )
 

@@ -41,10 +41,16 @@ class Page1Fragment : Fragment() {
         val etTelp = view.findViewById<EditText>(R.id.et_telp)
         val etAsalSekolah = view.findViewById<EditText>(R.id.et_asal_sekolah)
         val etAgama = view.findViewById<Spinner>(R.id.spinner_agama)
-        val etDrive = view.findViewById<EditText>(R.id.et_linkfoto)
+        val etDrive = view.findViewById<EditText>(R.id.et_linkKK)
+        val etDrive2 = view.findViewById<EditText>(R.id.et_linkakta)
+        val etDrive3 = view.findViewById<EditText>(R.id.et_linkfoto)
         val tvLabelGender = view.findViewById<TextView>(R.id.label_gender)
         val btnLanjutkan = view.findViewById<Button>(R.id.btn_lanjutkan)
         val cvBack = view.findViewById<CardView>(R.id.cvBack)
+
+        etDrive.addDriveLinkValidator()
+        etDrive2.addDriveLinkValidator()
+        etDrive3.addDriveLinkValidator()
 
         // Set tanggal saat diklik
         etTglLahir.setOnClickListener {
@@ -57,7 +63,7 @@ class Page1Fragment : Fragment() {
         }
 
         btnLanjutkan.setOnClickListener {
-            if (validateFields(etNISN, etNIK, etTelp, etName, etTglLahir, etTmpLahir, etOrtu, etAlamat, etKota, etAsalSekolah, etDrive) &&
+            if (validateFields(etNISN, etNIK, etTelp, etName, etTglLahir, etTmpLahir, etOrtu, etAlamat, etKota, etAsalSekolah, etDrive, etDrive2, etDrive3) &&
                 validateSpinner(etAgama) && validateRadioGroup(kelamin, tvLabelGender)) {
 
                 // Simpan data ke ViewModel
@@ -73,7 +79,9 @@ class Page1Fragment : Fragment() {
                 formViewModel.phone.value = etTelp.text.toString()
                 formViewModel.schoolOrigin.value = etAsalSekolah.text.toString()
                 formViewModel.religion.value = etAgama.selectedItem.toString()
-                formViewModel.driveLink.value = etDrive.text.toString()
+                formViewModel.driveKK.value = etDrive.text.toString()
+                formViewModel.driveAkta.value = etDrive2.text.toString()
+                formViewModel.driveFoto.value = etDrive3.text.toString()
 
                 // Navigasi ke halaman kedua
                 (activity as MainActivity4).navigateToPage2()
@@ -134,24 +142,24 @@ class Page1Fragment : Fragment() {
             }
         })
 
-        etDrive.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not needed
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Not needed
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
-                if (!googleDrivePattern.matches(s.toString())) {
-                    etDrive.error = "Masukkan link Google Drive yang valid"
-                } else {
-                    etDrive.error = null // Clear error if the link is valid
-                }
-            }
-        })
+//        etDrive.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                // Not needed
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                // Not needed
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
+//                if (!googleDrivePattern.matches(s.toString())) {
+//                    etDrive.error = "Masukkan link Google Drive yang valid"
+//                } else {
+//                    etDrive.error = null // Clear error if the link is valid
+//                }
+//            }
+//        })
 
         return view
     }
@@ -237,6 +245,21 @@ class Page1Fragment : Fragment() {
             label.text = "Jenis Kelamin"
             true
         }
+    }
+
+    private fun EditText.addDriveLinkValidator() {
+        this.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
+                if (!googleDrivePattern.matches(s.toString())) {
+                    this@addDriveLinkValidator.error = "Masukkan link Google Drive yang valid"
+                } else {
+                    this@addDriveLinkValidator.error = null
+                }
+            }
+        })
     }
 
     private fun showDatePickerDialog(editText: EditText) {

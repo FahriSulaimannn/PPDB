@@ -235,10 +235,27 @@
                     app:boxCornerRadiusTopStart="25dp">
 
                     <EditText
-                        android:id="@+id/et_linkfoto2"
+                        android:id="@+id/et_fotoIjazah"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Masukkan link GoogleDrive"
+                        android:hint="Masukkan link GoogleDrive Ijazah"
+                        android:inputType="textUri" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="25dp"
+                    app:boxCornerRadiusBottomStart="25dp"
+                    app:boxCornerRadiusTopEnd="25dp"
+                    app:boxCornerRadiusTopStart="25dp">
+
+                    <EditText
+                        android:id="@+id/et_fotoSertif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Masukkan link GoogleDrive Sertifikat"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
 

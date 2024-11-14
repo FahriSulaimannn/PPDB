@@ -36,4 +36,10 @@
         <item>Hindu</item>
     </array>
 
+        <string name="profile_image">Profile Image</string>
+        <string name="name_label">Name</string>
+        <string name="enter_name">Enter your name</string>
+
+
+
 </resources>

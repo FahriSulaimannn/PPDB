@@ -20,12 +20,15 @@ class FormViewModel : ViewModel() {
     val phone = MutableLiveData<String>()
     val schoolOrigin = MutableLiveData<String>()
     val religion = MutableLiveData<String>()
-    val driveLink = MutableLiveData<String>()
+    val driveKK = MutableLiveData<String>()
+    val driveAkta = MutableLiveData<String>()
+    val driveFoto = MutableLiveData<String>()
     val nilaiIndo = MutableLiveData<String>()
     val nilaiIng = MutableLiveData<String>()
     val nilaiMat = MutableLiveData<String>()
     val nilaiIPA = MutableLiveData<String>()
-    val driveLink2 = MutableLiveData<String>()
+    val driveIjazah = MutableLiveData<String>()
+    val driveSertif = MutableLiveData<String>()
 
     // Function to submit data to Firebase Realtime Database
     fun submitToDatabase() {
@@ -44,12 +47,15 @@ class FormViewModel : ViewModel() {
             "phone" to phone.value,
             "schoolOrigin" to schoolOrigin.value,
             "religion" to religion.value,
-            "driveLink" to driveLink.value,
+            "driveKK" to driveKK.value,
+            "driveAkta" to driveAkta.value,
+            "driveFoto" to driveFoto.value,
             "nilaiIndo" to nilaiIndo.value,
             "nilaiIng" to nilaiIng.value,
             "nilaiMat" to nilaiMat.value,
             "nilaiIPA" to nilaiIPA.value,
-            "driveLink2" to driveLink2.value,
+            "driveIjazah" to driveIjazah.value,
+            "driveSertif" to driveSertif.value,
         )
 
         database.child("users").push().setValue(userData)
@@ -77,8 +83,12 @@ class FormViewModel : ViewModel() {
         nilaiIPA.value = nilai
     }
 
-    fun setDriveLink2(link: String) {
-        driveLink2.value = link
+    fun setDriveIjazah(link: String) {
+        driveIjazah.value = link
+    }
+
+    fun setDriveSertif(link: String) {
+        driveSertif.value = link
     }
 
 
