@@ -134,32 +134,21 @@ class Page1Fragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.length != 12) {
-                    etTelp.error = "NIK harus terdiri dari 12 angka"
-                } else {
-                    etTelp.error = null // Menghapus error jika jumlah karakter sudah tepat 10
+                val input = s.toString()
+
+                when {
+                    !input.startsWith("08") -> {
+                        etTelp.error = "No.Telp harus diawali dengan '08'"
+                    }
+                    input.length != 12 -> {
+                        etTelp.error = "No.Telp harus terdiri dari 12 angka"
+                    }
+                    else -> {
+                        etTelp.error = null // Menghapus error jika panjang dan format benar
+                    }
                 }
             }
         })
-
-//        etDrive.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                // Not needed
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                // Not needed
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
-//                if (!googleDrivePattern.matches(s.toString())) {
-//                    etDrive.error = "Masukkan link Google Drive yang valid"
-//                } else {
-//                    etDrive.error = null // Clear error if the link is valid
-//                }
-//            }
-//        })
 
         return view
     }
@@ -222,8 +211,6 @@ class Page1Fragment : Fragment() {
         return allFieldsValid
     }
 
-
-
     private fun validateSpinner(spinner: Spinner): Boolean {
         return if (spinner.selectedItemPosition == 0) { // Assuming the first item is a placeholder like "Select Agama"
             (spinner.selectedView as TextView).error = "Harus dipilih"
@@ -265,27 +252,47 @@ class Page1Fragment : Fragment() {
     private fun showDatePickerDialog(editText: EditText) {
         val calendar = Calendar.getInstance()
 
+        // Batas maksimum: 15 tahun yang lalu
+        val maxDateCalendar = Calendar.getInstance()
+        maxDateCalendar.add(Calendar.YEAR, -15)  // Mengurangi 15 tahun dari sekarang
+
+        // Batas minimum: 21 tahun yang lalu
+        val minDateCalendar = Calendar.getInstance()
+        minDateCalendar.add(Calendar.YEAR, -21)  // Mengurangi 21 tahun dari sekarang
+
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
                 // Format the selected date
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                editText.setText(dateFormat.format(selectedDate.time))
 
-                // Clear error if previously set
-                editText.error = null
+                val today = Calendar.getInstance()
+                val age = today.get(Calendar.YEAR) - selectedDate.get(Calendar.YEAR)
+
+                // If the selected date makes age less than 15 or more than 21, show error
+                if (age < 15 || age > 21) {
+                    editText.error = "Tanggal lahir harus membuat usia antara 15 dan 21 tahun."
+                } else {
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    editText.setText(dateFormat.format(selectedDate.time))
+                    // Clear error if valid
+                    editText.error = null
+                }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        // Set maximum date to today
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        // Set the minimum date to 21 years ago
+        datePickerDialog.datePicker.minDate = minDateCalendar.timeInMillis
+
+        // Set the maximum date to 15 years ago
+        datePickerDialog.datePicker.maxDate = maxDateCalendar.timeInMillis
 
         datePickerDialog.show()
     }
+
 
 }

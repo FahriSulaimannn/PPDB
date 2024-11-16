@@ -2,6 +2,7 @@ package com.fahri.ppdb
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -21,7 +22,10 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import androidx.cardview.widget.CardView
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.FirebaseDatabase
 
 class account : ComponentActivity() {
 
@@ -134,36 +138,97 @@ class account : ComponentActivity() {
     }
 
     private fun deleteFirebaseAccount(firebaseUser: FirebaseUser?) {
-        firebaseUser?.delete()?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, "Akun berhasil dihapus dari aplikasi", Toast.LENGTH_SHORT).show()
-                logoutAndClearData()
+        firebaseUser?.let { user ->
+            val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+
+            if (googleSignInAccount != null) {
+                // Jika akun Google ditemukan, gunakan Google untuk re-autentikasi
+                val credential = GoogleAuthProvider.getCredential(googleSignInAccount.idToken, null)
+                reauthenticateAndDelete(user, credential)
+            } else if (user.email != null) {
+                // Jika akun menggunakan email, minta pengguna memasukkan kata sandi untuk re-autentikasi
+                showPasswordInputDialog(user)
             } else {
-                Toast.makeText(this, "Gagal menghapus akun. Hanya akun aplikasi yang dihapus.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Jenis akun tidak dikenali.", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+    private fun showPasswordInputDialog(user: FirebaseUser) {
+        val passwordInput = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            hint = "Masukkan kata sandi"
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Konfirmasi Kata Sandi")
+            .setMessage("Masukkan kata sandi untuk menghapus akun.")
+            .setView(passwordInput)
+            .setPositiveButton("Konfirmasi") { dialog, _ ->
+                val password = passwordInput.text.toString()
+                if (password.isNotEmpty()) {
+                    val credential = EmailAuthProvider.getCredential(user.email!!, password)
+                    reauthenticateAndDelete(user, credential)
+                } else {
+                    Toast.makeText(this, "Kata sandi tidak boleh kosong.", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("Batal") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun reauthenticateAndDelete(user: FirebaseUser, credential: AuthCredential) {
+        user.reauthenticate(credential).addOnCompleteListener { reauthTask ->
+            if (reauthTask.isSuccessful) {
+                // Hapus data pengguna dari Realtime Database
+                val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(user.uid)
+                databaseReference.removeValue().addOnCompleteListener { dbTask ->
+                    if (dbTask.isSuccessful) {
+                        // Hapus akun pengguna dari Firebase Authentication
+                        user.delete().addOnCompleteListener { deleteTask ->
+                            if (deleteTask.isSuccessful) {
+                                Toast.makeText(this, "Akun berhasil dihapus dari aplikasi", Toast.LENGTH_SHORT).show()
+                                logoutAndClearData()
+                            } else {
+                                Toast.makeText(this, "Gagal menghapus akun dari Firebase Authentication.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this, "Gagal menghapus data dari Realtime Database.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Re-autentikasi gagal. Silakan coba lagi.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     private fun logoutAndClearData() {
         firebaseAuth.signOut()
 
-        // Revoke Google Sign-In access
+        // Revoke Google Sign-In access jika ada
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
-                // Clear profile data
-                clearProfileData()
+                clearProfileData() // Clear profile data (reset profile image, etc.)
 
-                // Redirect to login screen
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent) // Memulai MainActivity kembali
+                finish() // Menutup activity ini
             }
         }
     }
 
+
     private fun clearProfileData() {
         textFullName.text = "Nama Pengguna"
         textEmail.text = "Email Pengguna"
-        profileImageView.setImageResource(R.drawable.profile)
+        profileImageView.setImageResource(R.drawable.profile)  // Set to default profile image
     }
 
     private fun showChangePasswordDialog(firebaseUser: FirebaseUser?) {

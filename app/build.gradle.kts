@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.storage)
 
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

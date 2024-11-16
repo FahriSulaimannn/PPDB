@@ -372,11 +372,9 @@ class Page2Fragment : Fragment() {
     private fun navigateToNextFragment() {
         val nextFragment = Page3Fragment() // Ganti dengan fragment tujuan berikutnya
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, Page3Fragment())
-            .addToBackStack(null)
-            .commit()
+            .replace(R.id.fragment_container, nextFragment)
+            .commit()  // Tidak menambahkan ke back stack
     }
-
 
     companion object {
         /**

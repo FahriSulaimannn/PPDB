@@ -3,31 +3,40 @@ package com.fahri.ppdb
 import FormViewModel
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class MainActivity4 : AppCompatActivity() {
 
     private val formViewModel: FormViewModel by viewModels()
-    private val PICK_IMAGE_REQUEST = 1
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main4)
 
-        // Hanya memuat Page1Fragment jika savedInstanceState == null
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, Page1Fragment())
-                .commit() // Tidak menambahkan Page1Fragment ke back stack
+        firebaseAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users")
+
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            checkUserData(userId)
+        } else {
+            // Jika tidak ada user yang login, arahkan ke login page atau logout
+            redirectToLogin()
         }
 
-        // Mengatur WindowInsets untuk memberikan padding sesuai sistem bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -48,6 +57,47 @@ class MainActivity4 : AppCompatActivity() {
 //        }
 //    }
 
+    private fun checkUserData(userId: String) {
+        Log.d("DebugCheckUserData", "Checking user data for $userId")
+        database.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("DebugCheckUserData", "onDataChange triggered")
+                if (snapshot.exists()) {
+                    Log.d("DebugCheckUserData", "User data found")
+                    navigateToFragment(Page3Fragment())
+                } else {
+                    Log.d("DebugCheckUserData", "User data not found")
+                    navigateToFragment(Page1Fragment())
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("DebugCheckUserData", "Database error: ${error.message}")
+                showError("Failed to load user data")
+            }
+        })
+    }
+
+
+    private fun navigateToFragment(fragment: Fragment) {
+        Log.d("DebugFragmentTransaction", "Navigating to fragment: ${fragment.javaClass.simpleName}")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+        Log.d("DebugFragmentTransaction", "Fragment transaction committed")
+    }
+
+
+    private fun redirectToLogin() {
+        // Logika untuk redirect ke login page
+        finish() // Menutup MainActivity4
+    }
+
+    private fun showError(message: String) {
+        // Tampilkan pesan error
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     // Fungsi untuk navigasi ke halaman Page2Fragment
     fun navigateToPage2() {
         // Mengganti fragment dan menambahkan Page2Fragment ke back stack
@@ -57,10 +107,4 @@ class MainActivity4 : AppCompatActivity() {
             .commit()
     }
 
-    // Fungsi untuk menangani klik tombol upload gambar
-    fun onUploadImageClick(view: View) {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
 }

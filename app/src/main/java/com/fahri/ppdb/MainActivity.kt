@@ -3,6 +3,7 @@ package com.fahri.ppdb
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -17,10 +18,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
+    private val database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
 //    lateinit var textFullName: TextView
 //    lateinit var textEmail: TextView
@@ -98,22 +104,84 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Menambahkan listener untuk CardView Cv7
+        // Mengatur view dan listener
         val cv7: View = findViewById(R.id.Cv7)
         cv7.setOnClickListener {
-            val intent = Intent(this, MainActivity4::class.java)
-            startActivity(intent)
+            // Debug untuk mengetahui apakah onClick dijalankan
+            Log.d("DEBUG", "cv7 button clicked")
+
+            checkUserCount { userCount ->
+                val firebaseUser = firebaseAuth.currentUser
+
+                if (firebaseUser == null) {
+                    // Debug user belum login
+                    Log.d("DEBUG", "User belum login")
+
+                    if (userCount >= 4) {
+                        // Data penuh
+                        Log.d("DEBUG", "Data penuh, menampilkan dialog pendaftaran penuh")
+                        showFullRegistrationDialog()
+                    } else {
+                        // Data masih bisa diisi
+                        Log.d("DEBUG", "Data tersedia, menampilkan dialog login")
+                        showLoginDialog()
+                    }
+                } else {
+                    // Debug user sudah login
+                    Log.d("DEBUG", "User sudah login")
+
+                    if (userCount >= 4) {
+                        // Data penuh
+                        checkUserData(firebaseUser.uid) { hasData ->
+                            if (hasData) {
+                                // Sudah mendaftar
+                                Log.d("DEBUG", "User sudah mendaftar, menuju MainActivity4")
+                                navigateToMainActivity4()
+                            } else {
+                                // Belum mendaftar
+                                Log.d("DEBUG", "User belum mendaftar, menampilkan dialog pendaftaran penuh")
+                                showFullRegistrationDialog()
+                            }
+                        }
+                    } else {
+                        // Data masih bisa diisi
+                        checkUserData(firebaseUser.uid) { hasData ->
+                            if (hasData) {
+                                // Sudah mendaftar
+                                Log.d("DEBUG", "User sudah mendaftar, menuju MainActivity4")
+                                navigateToMainActivity4()
+                            } else {
+                                // Belum mendaftar
+                                Log.d("DEBUG", "User belum mendaftar, menuju MainActivity4")
+                                navigateToMainActivity4()
+                            }
+                        }
+                    }
+                }
+            }
         }
+
 
         val cv4: View = findViewById(R.id.Cv4)
         cv4.setOnClickListener {
-            val intent = Intent(this, MainActivity5::class.java)
-            startActivity(intent)
+            val firebaseUser = firebaseAuth.currentUser
+            if (firebaseUser != null) {
+                val intent = Intent(this, MainActivity5::class.java)
+                startActivity(intent)
+            } else {
+                showLoginDialog()
+            }
         }
 
         val cv5: View = findViewById(R.id.Cv5)
         cv5.setOnClickListener {
             val intent = Intent(this, tatacara::class.java)
+            startActivity(intent)
+        }
+
+        val peringkat: View = findViewById(R.id.peringkat)
+        peringkat.setOnClickListener {
+            val intent = Intent(this, HasilPeringkatActivity::class.java)
             startActivity(intent)
         }
 
@@ -125,6 +193,73 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
+    }
+
+    private fun navigateToMainActivity4() {
+        val intent = Intent(this, MainActivity4::class.java)
+        startActivity(intent)
+    }
+
+    // Fungsi untuk memeriksa jumlah pengguna
+    private fun checkUserCount(callback: (Int) -> Unit) {
+        val firebaseUser = firebaseAuth.currentUser
+        if (firebaseUser == null) {
+            Log.e("DEBUG", "Pengguna tidak terautentikasi")
+            callback(0) // Pengguna belum terautentikasi
+            return
+        }
+
+        val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users")
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userCount = snapshot.childrenCount.toInt()
+                Log.d("DEBUG", "checkUserCount(): userCount = $userCount")
+                callback(userCount)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("DEBUG", "checkUserCount(): error = ${error.message}")
+                callback(0) // Default jika terjadi error
+            }
+        })
+    }
+
+
+
+
+    // Fungsi untuk memeriksa apakah pengguna sudah memiliki data di Firebase
+    private fun checkUserData(uid: String, callback: (Boolean) -> Unit) {
+        val userRef = database.getReference("users").child(uid)
+        userRef.get().addOnSuccessListener { snapshot ->
+            callback(snapshot.exists()) // True jika data ada, false jika tidak
+        }.addOnFailureListener {
+            // Handle error jika perlu
+            callback(false)
+        }
+    }
+
+
+    // Dialog jika pendaftaran sudah penuh
+    private fun showFullRegistrationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Pendaftaran sudah penuh. Silakan coba lagi nanti.")
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
+
+
+    // Dialog untuk meminta login
+    private fun showLoginDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Anda perlu login terlebih dahulu untuk mendaftar.")
+            .setCancelable(false)
+            .setPositiveButton("Login") { _, _ ->
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            .setNegativeButton("Batal") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
     }
 
     // Override fungsi onBackPressed untuk konfirmasi keluar
@@ -143,6 +278,8 @@ class MainActivity : AppCompatActivity() {
         val alert = builder.create()
         alert.show()
     }
+
+
 
 }
 
