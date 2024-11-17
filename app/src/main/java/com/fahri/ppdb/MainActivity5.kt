@@ -61,8 +61,9 @@ class MainActivity5 : AppCompatActivity() {
         val imageView5 = findViewById<ImageView>(R.id.imageView5)
         val cvBack = findViewById<CardView>(R.id.cvBack)
 
+        // Handle tombol kembali menggunakan CardView
         cvBack.setOnClickListener {
-            onBackPressed()  // Kembali ke halaman sebelumnya
+            finish() // Menutup activity sepenuhnya
         }
 
         // Download PDF button
@@ -191,11 +192,16 @@ class MainActivity5 : AppCompatActivity() {
 
                 override fun onCancelled(error: DatabaseError) {
                     // Menangani error
-                    Toast.makeText(this@MainActivity5, "Gagal memuat data: ${error.message}", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity5, "Gagal memuat data: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
 
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish() // Pastikan Activity ditutup sepenuhnya
     }
 
     private fun generatePdf(nama: String, nisn: String, nik: String, kelamin: String,

@@ -181,9 +181,27 @@ class MainActivity : AppCompatActivity() {
 
         val peringkat: View = findViewById(R.id.peringkat)
         peringkat.setOnClickListener {
-            val intent = Intent(this, HasilPeringkatActivity::class.java)
+            val firebaseUser = firebaseAuth.currentUser
+            if (firebaseUser != null) {
+                val intent = Intent(this, HasilPeringkatActivity::class.java)
+                startActivity(intent)
+            } else {
+                showLoginDialog()
+            }
+        }
+
+        val cv6: View = findViewById(R.id.Cv6)
+        cv6.setOnClickListener {
+            val intent = Intent(this, syarat_ketentuan::class.java)
             startActivity(intent)
         }
+
+        val jadwal: View = findViewById(R.id.jadwal)
+        jadwal.setOnClickListener {
+            val intent = Intent(this, BeritaActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // Dalam Activity atau Fragment
 //        val accountImageView = findViewById<ImageView>(R.id.account)

@@ -93,7 +93,7 @@ class Page2Fragment : Fragment() {
 
         btnSubmit.setOnClickListener {
             // Gunakan validateFields untuk memeriksa apakah ada field yang kosong
-            if (validateFields(etNilaiIndo, etNilaiIng, etNilaiMat, etNilaiIPA, etfotoIjazah, etfotoSertif)) {
+            if (validateFields(etNilaiIndo, etNilaiIng, etNilaiMat, etNilaiIPA, etfotoIjazah)) {
                 // Lanjutkan proses submit jika validasi sukses
                 // Logika submit ke Firebase atau tindakan lain di sini
                 formViewModel.nilaiIndo.value = etNilaiIndo.text.toString()
@@ -118,21 +118,6 @@ class Page2Fragment : Fragment() {
                     etfotoIjazah.error = "Masukkan link Google Drive yang valid"
                 } else {
                     etfotoIjazah.error = null
-                }
-            }
-        })
-
-        etfotoSertif.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
-                if (!googleDrivePattern.matches(s.toString())) {
-                    etfotoSertif.error = "Masukkan link Google Drive yang valid"
-                } else {
-                    etfotoSertif.error = null
                 }
             }
         })

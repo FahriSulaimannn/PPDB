@@ -3,14 +3,16 @@ package com.fahri.ppdb
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.*
 import com.fahri.ppdb.databinding.ActivityHasilPeringkatBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class HasilPeringkatActivity : AppCompatActivity() {
 
@@ -31,14 +33,25 @@ class HasilPeringkatActivity : AppCompatActivity() {
         binding = ActivityHasilPeringkatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Cek apakah pengguna sudah login
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) {
+            Toast.makeText(this, "Harap login terlebih dahulu", Toast.LENGTH_SHORT).show()
+            finish() // Kembali ke layar sebelumnya jika belum login
+            return
+        }
+
         // Inisialisasi RecyclerView
         recyclerView = binding.recyclerViewPeringkat
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapterPeringkat = AdapterPeringkat(itemList)
         recyclerView.adapter = adapterPeringkat
 
-        // Mengambil data dari Firebase Realtime Database
-        database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users")
+        // Referensi database dengan user yang login
+        database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("users")
+
+        // Ambil data hanya jika pengguna sudah login
         fetchData()
 
         // Menambahkan inset untuk sistem bar
