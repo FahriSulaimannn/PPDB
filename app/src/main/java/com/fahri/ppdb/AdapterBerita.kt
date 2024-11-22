@@ -31,7 +31,7 @@ class AdapterBerita(
         // Binding data ke ViewHolder
         holder.judulTextView.text = data.judul
         holder.lokasiTextView.text = data.lokasi
-        holder.tglTextView.text = data.tgl
+        holder.tglTextView.text = data.tanggal
         holder.isiTextView.text = data.isi
     }
 

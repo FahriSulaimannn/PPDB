@@ -1,5 +1,6 @@
 package com.fahri.ppdb
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -223,6 +224,7 @@ class account : ComponentActivity() {
             }
         }
     }
+
 
 
     private fun clearProfileData() {

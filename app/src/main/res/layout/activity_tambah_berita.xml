@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editJudulBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Judul Berita" />
+
+    <EditText
+        android:id="@+id/editIsiBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Isi Berita" />
+
+    <EditText
+        android:id="@+id/editLokasiBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Isi Lokasi" />
+
+    <EditText
+        android:id="@+id/editTanggalBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tanggal (DD-MM-YYYY)" />
+
+    <Button
+        android:id="@+id/btnSimpanBaru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan" />
+</LinearLayout>

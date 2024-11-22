@@ -35,6 +35,21 @@ class MainActivity : AppCompatActivity() {
 //
 //    val firebaseAuth = FirebaseAuth.getInstance()
 
+    override fun onStart() {
+        super.onStart()
+        val sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE)
+        val userRole = sharedPreferences.getString("user_role", "user")
+
+        // Periksa apakah user adalah admin
+        if (firebaseAuth.currentUser != null && userRole == "admin") {
+            startActivity(Intent(this, AdminActivity::class.java))
+            finish()
+        }
+
+        // Jika user tidak login, tetap di MainActivity, biarkan mereka eksplorasi fitur umum
+        // Fitur yang memerlukan login akan meminta login ketika diakses
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -19,6 +19,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
     lateinit var editEmail: EditText
@@ -129,15 +130,43 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
+                val currentUser = firebaseAuth.currentUser
+                if (currentUser != null) {
+                    val uid = currentUser.uid
+                    val adminRef = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("admin").child(uid)
+
+                    adminRef.get().addOnCompleteListener { task ->
+                        progresDialog.dismiss()
+                        if (task.isSuccessful) {
+                            val sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+
+                            if (task.result.exists()) {
+                                // Admin
+                                editor.putString("user_role", "admin")
+                                editor.apply()
+                                Toast.makeText(this, "Login sebagai Admin", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, AdminActivity::class.java))
+                            } else {
+                                // User
+                                editor.putString("user_role", "user")
+                                editor.apply()
+                                Toast.makeText(this, "Login sebagai User", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, MainActivity::class.java))
+                            }
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Gagal memeriksa role pengguna.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
             .addOnFailureListener { error ->
+                progresDialog.dismiss()
                 Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
-            .addOnCompleteListener{
-                progresDialog.dismiss()
-            }
     }
+
 
     @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -158,18 +187,30 @@ class LoginActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         progresDialog.show()
-        val credentian = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credentian)
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
-                startActivity(Intent(this, MainActivity::class.java))
+                val currentUser = firebaseAuth.currentUser
+                if (currentUser != null) {
+                    // Simpan role sebagai "user" dalam SharedPreferences
+                    val sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE)
+                    sharedPreferences.edit().putString("user_role", "user").apply()
+
+                    // Arahkan ke MainActivity
+                    Toast.makeText(this, "Login berhasil sebagai User", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
             }
             .addOnFailureListener { error ->
-                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                progresDialog.dismiss()
+                Toast.makeText(this, "Login dengan Google gagal: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 progresDialog.dismiss()
             }
     }
+
 
     private fun logout() {
         googleSignInClient.signOut().addOnCompleteListener(this) {
