@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PPDB" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="textInputStyle">@style/CustomTextInputTheme</item>
+        <item name="colorSurface">#F9DBBB</item>
     </style>
 
     <style name="Theme.PPDB" parent="Base.Theme.PPDB" />
@@ -15,4 +16,65 @@
     <style name="Theme.PPDB.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.PPDB.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="text">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="backgroundItem">
+        <item name="android:background">#000000</item>
+    </style>
+
+    <style name="utama">
+        <item name="android:backgroundTint">#2E3840</item>
+    </style>
+
+    <style name="background">
+        <item name="android:background">#F9DBBB</item>
+    </style>
+
+    <style name="button">
+        <item name="android:backgroundTint">#4E6E81</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="card1">
+        <item name="android:src">@drawable/bannersekolah</item>
+    </style>
+
+    <style name="card2">
+        <item name="android:src">@drawable/bannerjadwal</item>
+    </style>
+
+    <style name="card3">
+        <item name="android:src">@drawable/bannersyarat</item>
+    </style>
+
+    <style name="CustomTextInputTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/black</item> <!-- Gunakan selector -->
+        <item name="hintTextColor">@color/black</item>
+        <item name="boxStrokeErrorColor">#F44336</item> <!-- Warna error -->
+    </style>
+
+    <style name="cardSearch">
+        <item name="android:backgroundTint">#FFFFFF</item>
+    </style>
+
+    <style name="buttonLanjutkan">
+        <item name="android:backgroundTint">#4E6E81</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="cardAdmin">
+        <item name="android:backgroundTint">#FFF8E1</item>
+    </style>
+
+    <style name="celender">
+        <item name="android:headerBackground">#4E6E81</item>
+    </style>
+
+    <style name="buttonPlus">
+        <item name="android:backgroundTint">#FFFFFF</item>
+        <item name="android:textColor">#1C0F0F</item>
+    </style>
 </resources>

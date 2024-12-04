@@ -6,12 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity5"
-    android:background="#F9F7F7">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true">
+    style="@style/background">
 
     <LinearLayout
         android:id="@+id/dataContainer"
@@ -25,7 +20,7 @@
             app:cardElevation="4dp"
             app:cardCornerRadius="50dp"
             android:layout_marginTop="-50dp"
-            android:backgroundTint="#112D4E">
+            style="@style/utama">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,12 +31,13 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvBack"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_weight="5"
-                    android:layout_margin="15dp"
                     android:clickable="true"
-                    app:cardCornerRadius="15dp">
+                    android:backgroundTint="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="25dp">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
@@ -67,7 +63,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             app:cardCornerRadius="25dp"
-            android:backgroundTint="#3F72AF">
+            style="@style/button">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nama lengkap siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="5dp"/>
 
                 <TextView
@@ -87,6 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -95,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nomor NISN siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -102,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -110,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nomor NIK siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -117,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -125,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:text="Jenis kelamin siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -132,6 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -140,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="Tempat dan tanggal lahir siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -147,6 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -155,6 +166,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nama orangtua/wali siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -162,6 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -170,6 +183,7 @@
                     android:layout_height="wrap_content"
                     android:text="Alamat lengkap siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -177,6 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -185,6 +200,7 @@
                     android:layout_height="wrap_content"
                     android:text="Kota/Kabupaten :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -192,6 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -200,6 +217,7 @@
                     android:layout_height="wrap_content"
                     android:text="No. Telp./HP. :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -207,6 +225,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -215,6 +234,7 @@
                     android:layout_height="wrap_content"
                     android:text="Asal sekolah siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -222,6 +242,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -230,6 +251,7 @@
                     android:layout_height="wrap_content"
                     android:text="Agama siswa :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -237,6 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -245,6 +268,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nilai Bahasa Indonesia :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -252,6 +276,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -260,6 +285,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nilai Bahasa Inggris :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -267,6 +293,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -275,6 +302,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nilai Matematika :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -282,6 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -290,6 +319,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nilai Ilmu Pengetahuan Alam (IPA) :"
                     android:textSize="15sp"
+                    android:textColor="#FFFFFF"
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -297,22 +327,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
-                <LinearLayout
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#000000"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:text="Foto KK :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"/>
 
                     <ImageView
                         android:id="@+id/imageView1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="center"
                         android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Foto Akta :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"/>
 
                     <!-- ImageView untuk preview Google Drive gambar 2 -->
                     <ImageView
@@ -321,23 +371,33 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="center"/>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:text="Foto Siswa 3x4 :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"/>
 
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="center"
                         android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Foto Ijazah :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"/>
 
                     <!-- ImageView untuk preview Google Drive gambar 2 -->
                     <ImageView
@@ -346,33 +406,40 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginTop="16dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="center"/>
 
-                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Foto Sertifikat :"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="10dp"/>
 
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginTop="16dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="center"/>
 
             </LinearLayout>
+            </ScrollView>
 
         </androidx.cardview.widget.CardView>
 
         <!-- TextView dinamis akan ditambahkan di sini -->
     </LinearLayout>
-    </ScrollView>
 
     <Button
         android:id="@+id/download_pdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Download PDF"
+        android:textColor="#FFFFFF"
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#112D4E"/>
+        android:backgroundTint="@color/errorColor"/>
 </FrameLayout>

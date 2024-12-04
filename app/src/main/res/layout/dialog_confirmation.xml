@@ -18,63 +18,71 @@
             android:text="Konfirmasi data Anda"
             android:textSize="16sp"/>
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#FFFFFF"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:text="Foto KK :"/>
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
                 android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foto Akta :"/>
 
             <!-- ImageView untuk preview Google Drive gambar 2 -->
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"/>
+                android:layout_marginTop="16dp"/>
 
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:text="Foto Pribadi :"/>
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"
-                android:layout_weight="1"/>
+                android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foto Ijazah :"/>
 
             <!-- ImageView untuk preview Google Drive gambar 2 -->
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginTop="16dp"
-                android:scaleType="centerCrop"/>
+                android:layout_marginTop="16dp"/>
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Foto Sertifikat :"/>
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="center"/>
 
         <!-- ImageView untuk preview Google Drive gambar 1 -->
 

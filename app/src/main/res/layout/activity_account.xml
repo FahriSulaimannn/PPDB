@@ -1,99 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".account"
-    android:background="#F9F7F7">
+    style="@style/background">
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/backButton"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_margin="15dp"-->
+<!--        android:clickable="true"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:cardCornerRadius="15dp">-->
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/baseline_arrow_back_24"/>-->
+<!--    </androidx.cardview.widget.CardView>-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/backButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:backgroundTint="#FFFFFF"
         android:clickable="true"
-        android:layout_gravity="start"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/baseline_arrow_back_24"/>
+            android:src="@drawable/baseline_arrow_back_24" />
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Pengaturan Akun"
+        style="@style/text"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"/>
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Logout"
-        android:backgroundTint="@color/errorColor"
-        android:layout_margin="20dp"
-        android:clickable="true" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_button"
+        android:clickable="true"
+        android:gravity="right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/header_title"
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <ImageView
-                android:id="@+id/profile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/profile" />
-
-            <TextView
-                android:id="@+id/full_name"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Nama"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                app:cardCornerRadius="15dp"
+                style="@style/utama">
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textAlignment="center"
-                android:textSize="15sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
 
-            <Button
-                android:id="@+id/btn_edit_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="Ubah Profil" />
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/profile"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Nama"
+                        android:textColor="#FFFFFF"
+                        android:textAlignment="textStart"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textColor="#FFFFFF"
+                        android:textAlignment="textStart"
+                        android:textSize="15sp" />
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_edit_profile"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/baseline_drive_file_rename_outline_24" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btn_change_password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="#FFFFFF"
                 android:layout_marginTop="5dp"
-                android:text="Ubah Profil" />
+                android:text="Ubah Password"
+                style="@style/button"/>
 
             <Button
                 android:id="@+id/btn_delete_account"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:text="Ubah Profil" />
+                android:textColor="#FFFFFF"
+                android:text="Hapus Akun"
+                style="@style/button"/>
 
         </LinearLayout>
 
     </ScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

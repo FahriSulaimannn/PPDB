@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminActivity">
@@ -16,12 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="20dp"
-            android:backgroundTint="#0D145B"
+            style="@style/utama"
             android:layout_marginTop="-25dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:weightSum="3"
                 android:orientation="horizontal"
                 android:padding="15dp">
@@ -36,20 +38,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Selamat Datang  di"
+                        android:text="Halo 👋"
+                        android:textSize="17sp"
                         android:layout_marginStart="5dp"
                         android:textColor="#FFFFFF" />
-
-
 
                     <TextView
                         android:id="@+id/greeting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PPDB SMA KurniaAbadi"
+                        android:text="Calon Pendaftar"
                         android:textColor="#FFFFFF"
                         android:layout_marginStart="5dp"
-                        android:textSize="20sp"
+                        android:textSize="23sp"
                         android:textStyle="bold"/>
 
                 </LinearLayout>
@@ -64,34 +65,40 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewRunningText"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="@color/errorColor"
-            app:cardElevation="4dp">
+            android:text="Selamat Datang di menu admin Aplikasi"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            style="@style/text"
+            android:layout_marginRight="10dp"
+            android:textSize="15dp"/>
 
-            <TextView
-                android:id="@+id/runningText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Welcome to our application! This text will scroll continuously across the screen."
-                android:textSize="16sp"
-                android:layout_margin="5dp"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true" />
-        </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/text"
+            android:text="PPDB SMA Cendekia Mandiri"
+            android:textSize="25dp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#8E8E8E"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            style="@style/cardAdmin"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp">
 
@@ -105,7 +112,7 @@
                     android:id="@+id/judulAdmin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#4CAF50"
+                    android:background="#F44336"
                     android:padding="10dp"
                     android:text="Menu Admin"
                     android:textColor="#FFFFFF"
@@ -115,19 +122,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_margin="16dp"
                     android:weightSum="3"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/aturTanggal"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -142,14 +148,15 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/rules" />
+                                android:src="@drawable/aturtanggal" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
-                                android:text="Syarat dan Ketentuan"
+                                android:textColor="#FFFFFF"
+                                android:text="Atur Tanggal Pendaftaran"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
                         </LinearLayout>
@@ -162,7 +169,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -177,14 +184,15 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/group" />
+                                android:src="@drawable/confirmation" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
-                                android:text="Daftar siswa mendaftar"
+                                android:textColor="#FFFFFF"
+                                android:text="Konfirmasi siswa mendaftar"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
                         </LinearLayout>
@@ -197,7 +205,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -212,60 +220,18 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/schedule" />
+                                android:src="@drawable/editjadwal" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
+                                android:textColor="#FFFFFF"
                                 android:text="Edit Jadwal Pendaftaran"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp">
-                    <androidx.cardview.widget.CardView
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_margin="5dp"
-                        android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="3dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="3dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="15dp"
-                                android:layout_below="@+id/Iv"
-                                android:layout_centerInParent="true"
-                                android:text="Pendaftaran"
-                                android:textAlignment="center"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/Iv"
-                                android:layout_width="120dp"
-                                android:layout_height="90dp"
-                                android:src="@drawable/daftaricon"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerInParent="true" />
-
-                        </RelativeLayout>
-
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
@@ -317,6 +283,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             app:cardCornerRadius="12dp"
+            style="@style/cardAdmin"
             app:cardElevation="6dp">
 
             <!-- Bagian atas dengan latar belakang merah gelap untuk menampilkan tanggal hutang -->
@@ -352,7 +319,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -374,6 +341,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
+                                android:textColor="#FFFFFF"
                                 android:text="Syarat dan Ketentuan"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
@@ -387,7 +355,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -409,6 +377,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
+                                android:textColor="#FFFFFF"
                                 android:text="Daftar siswa diterima"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
@@ -422,7 +391,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:layout_margin="5dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -444,6 +413,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
+                                android:textColor="#FFFFFF"
                                 android:text="Jadwal Pendaftaran"
                                 android:textAlignment="center"
                                 android:textStyle="bold"/>
@@ -462,7 +432,7 @@
                         android:layout_height="120dp"
                         android:layout_margin="5dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        style="@style/button"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="3dp">
 
@@ -477,6 +447,7 @@
                                 android:layout_below="@+id/Iv7"
                                 android:layout_centerInParent="true"
                                 android:text="Pendaftaran"
+                                android:textColor="#FFFFFF"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
 
@@ -496,13 +467,6 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Berita"
-            android:textStyle="bold"
-            android:layout_marginLeft="15dp"/>
 
         <!--        <Button-->
         <!--            android:id="@+id/btn_logout"-->

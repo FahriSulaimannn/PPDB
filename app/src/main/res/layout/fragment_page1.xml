@@ -12,9 +12,9 @@
         <ImageView
             android:id="@+id/headerImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sekolahh"
+            android:src="@drawable/sekolah"
             app:layout_constraintTop_toTopOf="parent"/> <!-- Ganti dengan gambar background yang Anda inginkan -->
 
         <LinearLayout
@@ -32,6 +32,7 @@
                 android:layout_weight="5"
                 android:layout_margin="15dp"
                 android:clickable="true"
+                android:backgroundTint="#FFFFFF"
                 app:cardCornerRadius="15dp">
                 <ImageView
                     android:layout_width="match_parent"
@@ -45,11 +46,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 app:cardCornerRadius="15dp"
+                style="@style/utama"
                 android:layout_weight="1">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center"
                     android:weightSum="4">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -64,6 +67,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Formulir Pendaftaran Biodata Siswa"
                         android:textAlignment="textStart"
+                        android:textColor="#FFFFFF"
                         android:textSize="17sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -89,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+
                 android:padding="20dp">
 
         <!--    &lt;!&ndash; Upload Gambar &ndash;&gt;-->
@@ -120,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Nama Lengkap"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -128,6 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:boxBackgroundMode="outline"
+
                     app:boxCornerRadiusBottomEnd="25dp"
                     app:boxCornerRadiusBottomStart="25dp"
                     app:boxCornerRadiusTopEnd="25dp"
@@ -137,6 +144,7 @@
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/text"
                         android:hint="Masukkan nama lengkap"
                         android:inputType="textCapWords" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -147,6 +155,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="NISN"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -165,6 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Masukkan NISN"
+                        style="@style/text"
                         android:inputType="number"
                         android:maxLength="10" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -175,6 +185,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="NIK"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -193,6 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Masukkan NIK"
+                        style="@style/text"
                         android:inputType="number"
                         android:maxLength="16"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -204,6 +216,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Jenis Kelamin"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -236,6 +249,7 @@
                     android:text="Tempat dan Tanggal Lahir"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
+                    style="@style/text"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -260,6 +274,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Tanggal lahir"
+                            style="@style/text"
                             android:inputType="none"
                             android:focusable="false"/> <!-- Nonaktifkan keyboard saat diklik -->
                     </com.google.android.material.textfield.TextInputLayout>
@@ -281,6 +296,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Tempat lahir"
+                            style="@style/text"
                             android:inputType="textCapSentences" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,6 +308,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Nama Orangtua/Wali"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -309,6 +326,7 @@
                         android:id="@+id/et_ortu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/text"
                         android:hint="Masukkan nama orangtua/wali"
                         android:inputType="textCapWords" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -319,6 +337,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Alamat lengkap"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -337,6 +356,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Masukkan alamat"
+                        style="@style/text"
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -346,6 +366,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Kota/Kabupaten"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -363,6 +384,7 @@
                         android:id="@+id/et_kota"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/text"
                         android:hint="Masukkan nama kota/kabupaten"
                         android:inputType="textCapSentences" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -373,6 +395,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="No. Telp./HP."
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -392,6 +415,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Masukkan nomor telepon"
                         android:inputType="number"
+                        style="@style/text"
                         android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -401,6 +425,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Asal Sekolah"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -419,6 +444,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Masukkan asal sekolah"
+                        style="@style/text"
                         android:inputType="textCapWords" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -428,6 +454,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Agama"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -446,6 +473,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Foto KK, Akta, Foto Pribadi 3x4"
+                    style="@style/text"
                     android:textAlignment="textStart"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -464,6 +492,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Masukkan link GoogleDrive KK"
+                        style="@style/text"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -480,6 +509,7 @@
                         android:id="@+id/et_linkakta"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/text"
                         android:hint="Masukkan link GoogleDrive Akta"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -497,6 +527,7 @@
                         android:id="@+id/et_linkfoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/text"
                         android:hint="Masukkan link GoogleDrive Foto"
                         android:inputType="textUri" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -515,9 +546,9 @@
                     android:id="@+id/btn_lanjutkan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
                     android:text="Lanjutkan"
-                    android:backgroundTint="?attr/colorPrimary"
-                    android:textColor="@android:color/white"/>
+                    style="@style/buttonLanjutkan"/>
 
             </LinearLayout>
             </ScrollView>

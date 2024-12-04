@@ -1,6 +1,7 @@
 package com.fahri.ppdb
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
@@ -39,24 +41,39 @@ class AdminActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.admin_activity)
 
-        val runningText = findViewById<TextView>(R.id.runningText)
-        runningText.isSelected = true
-
         val accountImageView = findViewById<ImageView>(R.id.account)
+        val greetingTextView = findViewById<TextView>(R.id.greeting)
 
-        // Cek apakah user sudah login
+// Referensi ke FirebaseAuth dan Realtime Database
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference("admin")
+
+// Cek apakah user sudah login
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null) {
+            // Ambil userId pengguna yang sedang login
+            val userId = firebaseUser.uid
+
+            // Muat nama pengguna dari Realtime Database
+            databaseReference.child(userId).child("name").get().addOnSuccessListener { snapshot ->
+                val userName = snapshot.value?.toString() ?: ""
+                greetingTextView.text = userName
+            }.addOnFailureListener {
+                greetingTextView.text = "" // Kosongkan jika gagal memuat nama
+            }
+
             // Muat gambar profil pengguna ke accountImageView
             val profilePhotoUrl = firebaseUser.photoUrl
             profilePhotoUrl?.let {
                 Glide.with(this)
                     .load(it)
-                    .placeholder(R.drawable.profile)
-                    .circleCrop()
+                    .placeholder(R.drawable.profile) // gambar default jika tidak ada foto profil
+                    .circleCrop() // buat gambar bulat
                     .into(accountImageView)
             }
         }
+
 
         accountImageView.setOnClickListener {
             val intent = Intent(this, account::class.java)
@@ -70,6 +87,12 @@ class AdminActivity : AppCompatActivity() {
             insets
         }
 
+        val aturTanggal: View = findViewById(R.id.aturTanggal)
+        aturTanggal.setOnClickListener {
+            val intent = Intent(this, AturTanggalActivity::class.java)
+            startActivity(intent)
+        }
+
         val EditJadwal: View = findViewById(R.id.EditJadwal)
         EditJadwal.setOnClickListener {
             val intent = Intent(this, BaeritaActivityAdmin::class.java)
@@ -79,10 +102,10 @@ class AdminActivity : AppCompatActivity() {
         val cv7: View = findViewById(R.id.Cv7)
         cv7.setOnClickListener {
             checkUserCount { userCount ->
-                if (userCount >= 4) {
+                if (userCount >= 35) {
                     showFullRegistrationDialog()
                 } else {
-                    val intent = Intent(this, MainActivity4::class.java)
+                    val intent = Intent(this, MendaftarAdminActivity::class.java)
                     startActivity(intent)
                 }
             }

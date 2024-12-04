@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -70,6 +71,13 @@ class RegisterActivity : AppCompatActivity() {
              } else {
                  Toast.makeText(this,"Silahkan isi semua data",Toast.LENGTH_SHORT).show()
              }
+        }
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+        // Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            finish() // Menutup activity sepenuhnya
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

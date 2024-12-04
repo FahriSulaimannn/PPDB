@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="errorColor">#FF4444</color> // Example error color
     <color name="defaultTextColor">#000000</color> // Black
+    <color name="shape_background_color">?attr/colorSurface</color>
+
 </resources>

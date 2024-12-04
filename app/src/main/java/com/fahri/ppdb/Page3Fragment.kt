@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.fahri.ppdb.databinding.FragmentPage3Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -28,6 +30,13 @@ class Page3Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPage3Binding.inflate(inflater, container, false)
+
+        setStatusBarColor(R.color.black)
+        setStatusBarTextDark(false)
+
+        binding.cvBack.setOnClickListener {
+            requireActivity().finish() // Menutup Activity induk
+        }
 
         // Firebase Auth and Database reference
         val userUID = FirebaseAuth.getInstance().currentUser?.uid
@@ -59,13 +68,13 @@ class Page3Fragment : Fragment() {
 
                     if (status == "approve") {
                         // If the status is "approve"
-                        binding.status.text = "Status: Approved"
-                        binding.deskripsi.text = "Your application has been approved. You can proceed with the next steps."
+                        binding.status.text = "Approved"
+                        binding.deskripsi.text = "Data anda sudah dikonfirmasi oleh Administrator, Silahkan Daftar Ulang ke Sekolah"
                         binding.icon.setImageResource(R.drawable.check) // Approved icon
                     } else {
                         // If the status is "pending" or any other value
-                        binding.status.text = "Status: Pending"
-                        binding.deskripsi.text = "Your application is still pending approval."
+                        binding.status.text = "Pending"
+                        binding.deskripsi.text = "Data anda sedang diproses oleh Administrator mohon tunggu"
                         binding.icon.setImageResource(R.drawable.proces) // Pending icon
                     }
                 }
@@ -85,6 +94,24 @@ class Page3Fragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setStatusBarColor(colorResId: Int) {
+        activity?.window?.let { window ->
+            window.statusBarColor = ContextCompat.getColor(requireContext(), colorResId)
+        }
+    }
+
+    private fun setStatusBarTextDark(isDark: Boolean) {
+        val decorView = activity?.window?.decorView
+        if (decorView != null) {
+            val flags = decorView.systemUiVisibility
+            decorView.systemUiVisibility = if (isDark) {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            }
+        }
     }
 
     override fun onDestroyView() {

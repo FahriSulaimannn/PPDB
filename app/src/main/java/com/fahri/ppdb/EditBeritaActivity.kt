@@ -1,15 +1,18 @@
 package com.fahri.ppdb
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.util.Calendar
 
 class EditBeritaActivity : AppCompatActivity() {
 
@@ -32,7 +35,26 @@ class EditBeritaActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.editJudul).setText(judul)
         findViewById<EditText>(R.id.editIsi).setText(isi)
         findViewById<EditText>(R.id.editLokasi).setText(lokasi)
-        findViewById<EditText>(R.id.editTanggal).setText(tanggal)
+        val editTanggal = findViewById<EditText>(R.id.editTanggal)
+        editTanggal.setText(tanggal)
+
+        // Nonaktifkan input manual untuk tanggal dan tambahkan DatePickerDialog
+        editTanggal.isFocusable = false
+        editTanggal.isClickable = true
+        editTanggal.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
+                // Format tanggal ke dalam string DD-MM-YYYY
+                val formattedDate = String.format("%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear)
+                editTanggal.setText(formattedDate)
+            }, year, month, day)
+
+            datePickerDialog.show()
+        }
 
         // Inisialisasi Firebase
         database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("berita")
@@ -40,8 +62,8 @@ class EditBeritaActivity : AppCompatActivity() {
         // Tombol Simpan
         findViewById<Button>(R.id.btnSave).setOnClickListener {
             val updatedJudul = findViewById<EditText>(R.id.editJudul).text.toString()
-            val updatedIsi = findViewById<EditText>(R.id.editIsi).text.toString()
             val updatedLokasi = findViewById<EditText>(R.id.editLokasi).text.toString()
+            val updatedIsi = findViewById<EditText>(R.id.editIsi).text.toString()
             val updatedTanggal = findViewById<EditText>(R.id.editTanggal).text.toString()
 
             // Simpan perubahan ke Firebase
@@ -89,6 +111,14 @@ class EditBeritaActivity : AppCompatActivity() {
 
             // Tampilkan dialog
             builder.create().show()
+        }
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+// Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            // Memanggil aksi tombol back bawaan Android
+            onBackPressedDispatcher.onBackPressed()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

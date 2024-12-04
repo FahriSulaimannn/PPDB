@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -83,119 +84,132 @@ class MainActivity5 : AppCompatActivity() {
         val userUID = currentUser?.uid
 
         if (userUID != null) {
-            val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users").child(userUID)
+            val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("users")
+                .child(userUID)
 
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Mengecek nilai status terlebih dahulu
-                    val status = snapshot.child("status").getValue(String::class.java)
+                    if (!snapshot.exists()) {
+                        // Tampilkan AlertDialog jika data belum ada
+                        val alertDialog = android.app.AlertDialog.Builder(this@MainActivity5)
+                            .setTitle("Pemberitahuan")
+                            .setMessage("Data anda belum ada silahkan mendaftar terlebih dahulu")
+                            .setPositiveButton("OK") { dialog, _ ->
+                                finish() // Menutup activity
+                            }
+                            .setOnCancelListener {
+                                // Jika dialog dibatalkan (misalnya dengan menekan tombol back), activity juga ditutup
+                                finish()
+                            }
+                            .create()
 
-                    if (status == "approve") {
-                        // Tampilkan data hanya jika status adalah "approve"
-                        nama.text = snapshot.child("name").getValue(String::class.java) ?: "N/A"
-                        nisn.text = snapshot.child("nisn").getValue(String::class.java) ?: "N/A"
-                        nik.text = snapshot.child("nik").getValue(String::class.java) ?: "N/A"
-                        kelamin.text = snapshot.child("gender").getValue(String::class.java) ?: "N/A"
-                        tempatTanggal.text = "${snapshot.child("birthPlace").getValue(String::class.java) ?: "N/A"}, ${snapshot.child("birthdate").getValue(String::class.java) ?: "N/A"}"
-                        ortu.text = snapshot.child("parentName").getValue(String::class.java) ?: "N/A"
-                        alamat.text = snapshot.child("address").getValue(String::class.java) ?: "N/A"
-                        kota.text = snapshot.child("city").getValue(String::class.java) ?: "N/A"
-                        telp.text = snapshot.child("phone").getValue(String::class.java) ?: "N/A"
-                        asalSekolah.text = snapshot.child("schoolOrigin").getValue(String::class.java) ?: "N/A"
-                        agama.text = snapshot.child("religion").getValue(String::class.java) ?: "N/A"
-                        indo.text = snapshot.child("nilaiIndo").getValue(String::class.java) ?: "N/A"
-                        inggris.text = snapshot.child("nilaiIng").getValue(String::class.java) ?: "N/A"
-                        matematika.text = snapshot.child("nilaiMat").getValue(String::class.java) ?: "N/A"
-                        ipa.text = snapshot.child("nilaiIPA").getValue(String::class.java) ?: "N/A"
-
-                        // Mendapatkan link Google Drive dari Firebase
-                        val driveLink = snapshot.child("driveKK").getValue(String::class.java)
-                        val driveLink2 = snapshot.child("driveAkta").getValue(String::class.java)
-                        val driveLink3 = snapshot.child("driveFoto").getValue(String::class.java)
-                        val driveLink4 = snapshot.child("driveFotoIjazah").getValue(String::class.java)
-                        val driveLink5 = snapshot.child("driveFotoSertif").getValue(String::class.java)
-
-                        if (!driveLink.isNullOrEmpty()) {
-                            // Extract file ID from Google Drive link
-                            val fileId = extractFileId(driveLink)
-                            val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
-                            Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
-
-                            // Use Glide to load the image into imageView1
-                            Glide.with(this@MainActivity5)
-                                .load(directImageUrl)
-                                .into(imageView1)
-                                .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
-                        }
-
-                        if (!driveLink2.isNullOrEmpty()) {
-                            // Extract file ID from Google Drive link
-                            val fileId = extractFileId(driveLink2)
-                            val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
-                            Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
-
-                            // Use Glide to load the image into imageView1
-                            Glide.with(this@MainActivity5)
-                                .load(directImageUrl)
-                                .into(imageView2)
-                                .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
-                        }
-
-                        if (!driveLink3.isNullOrEmpty()) {
-                            // Extract file ID from Google Drive link
-                            val fileId = extractFileId(driveLink3)
-                            val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
-                            Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
-
-                            // Use Glide to load the image into imageView1
-                            Glide.with(this@MainActivity5)
-                                .load(directImageUrl)
-                                .into(imageView3)
-                                .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
-                        }
-
-                        if (!driveLink4.isNullOrEmpty()) {
-                            // Extract file ID from Google Drive link
-                            val fileId = extractFileId(driveLink4)
-                            val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
-                            Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
-
-                            // Use Glide to load the image into imageView1
-                            Glide.with(this@MainActivity5)
-                                .load(directImageUrl)
-                                .into(imageView4)
-                                .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
-                        }
-
-                        if (!driveLink5.isNullOrEmpty()) {
-                            // Extract file ID from Google Drive link
-                            val fileId = extractFileId(driveLink5)
-                            val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
-                            Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
-
-                            // Use Glide to load the image into imageView1
-                            Glide.with(this@MainActivity5)
-                                .load(directImageUrl)
-                                .into(imageView5)
-                                .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
-                        }
-
-                        else {
-                            Toast.makeText(this@MainActivity5, "Link gambar tidak tersedia", Toast.LENGTH_SHORT).show()
-                        }
-
+                        alertDialog.show()
                     } else {
-                        // Jika status belum approve, beri pesan atau tangani sesuai kebutuhan
-                        Toast.makeText(this@MainActivity5, "Data belum di-approve dan tidak dapat ditampilkan.", Toast.LENGTH_SHORT).show()
+                        // Mengecek nilai status terlebih dahulu
+                        val status = snapshot.child("status").getValue(String::class.java)
+
+                        if (status == "approve") {
+                            // Tampilkan data hanya jika status adalah "approve"
+                            nama.text = snapshot.child("name").getValue(String::class.java) ?: "N/A"
+                            nisn.text = snapshot.child("nisn").getValue(String::class.java) ?: "N/A"
+                            nik.text = snapshot.child("nik").getValue(String::class.java) ?: "N/A"
+                            kelamin.text = snapshot.child("gender").getValue(String::class.java) ?: "N/A"
+                            tempatTanggal.text = "${snapshot.child("birthPlace").getValue(String::class.java) ?: "N/A"}, ${snapshot.child("birthdate").getValue(String::class.java) ?: "N/A"}"
+                            ortu.text = snapshot.child("parentName").getValue(String::class.java) ?: "N/A"
+                            alamat.text = snapshot.child("address").getValue(String::class.java) ?: "N/A"
+                            kota.text = snapshot.child("city").getValue(String::class.java) ?: "N/A"
+                            telp.text = snapshot.child("phone").getValue(String::class.java) ?: "N/A"
+                            asalSekolah.text = snapshot.child("schoolOrigin").getValue(String::class.java) ?: "N/A"
+                            agama.text = snapshot.child("religion").getValue(String::class.java) ?: "N/A"
+                            indo.text = snapshot.child("nilaiIndo").getValue(String::class.java) ?: "N/A"
+                            inggris.text = snapshot.child("nilaiIng").getValue(String::class.java) ?: "N/A"
+                            matematika.text = snapshot.child("nilaiMat").getValue(String::class.java) ?: "N/A"
+                            ipa.text = snapshot.child("nilaiIPA").getValue(String::class.java) ?: "N/A"
+
+                            // Mendapatkan link Google Drive dari Firebase
+                            val driveLink = snapshot.child("driveKK").getValue(String::class.java)
+                            val driveLink2 = snapshot.child("driveAkta").getValue(String::class.java)
+                            val driveLink3 = snapshot.child("driveFoto").getValue(String::class.java)
+                            val driveLink4 = snapshot.child("driveFotoIjazah").getValue(String::class.java)
+                            val driveLink5 = snapshot.child("driveFotoSertif").getValue(String::class.java)
+
+                            if (!driveLink.isNullOrEmpty()) {
+                                // Extract file ID from Google Drive link
+                                val fileId = extractFileId(driveLink)
+                                val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
+                                Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
+
+                                // Use Glide to load the image into imageView1
+                                Glide.with(this@MainActivity5)
+                                    .load(directImageUrl)
+                                    .into(imageView1)
+                                    .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
+                            }
+
+                            if (!driveLink2.isNullOrEmpty()) {
+                                // Extract file ID from Google Drive link
+                                val fileId = extractFileId(driveLink2)
+                                val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
+                                Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
+
+                                // Use Glide to load the image into imageView2
+                                Glide.with(this@MainActivity5)
+                                    .load(directImageUrl)
+                                    .into(imageView2)
+                                    .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
+                            }
+
+                            if (!driveLink3.isNullOrEmpty()) {
+                                // Extract file ID from Google Drive link
+                                val fileId = extractFileId(driveLink3)
+                                val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
+                                Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
+
+                                // Use Glide to load the image into imageView3
+                                Glide.with(this@MainActivity5)
+                                    .load(directImageUrl)
+                                    .into(imageView3)
+                                    .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
+                            }
+
+                            if (!driveLink4.isNullOrEmpty()) {
+                                // Extract file ID from Google Drive link
+                                val fileId = extractFileId(driveLink4)
+                                val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
+                                Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
+
+                                // Use Glide to load the image into imageView4
+                                Glide.with(this@MainActivity5)
+                                    .load(directImageUrl)
+                                    .into(imageView4)
+                                    .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
+                            }
+
+                            if (!driveLink5.isNullOrEmpty()) {
+                                // Extract file ID from Google Drive link
+                                val fileId = extractFileId(driveLink5)
+                                val directImageUrl = "https://drive.google.com/uc?export=view&id=$fileId"
+                                Log.d("DirectImageUrl", "Direct Image URL: $directImageUrl")
+
+                                // Use Glide to load the image into imageView5
+                                Glide.with(this@MainActivity5)
+                                    .load(directImageUrl)
+                                    .into(imageView5)
+                                    .onLoadFailed(ContextCompat.getDrawable(this@MainActivity5, R.drawable.cancel)) // Menambahkan penanganan error
+                            }
+
+                        } else {
+                            // Jika status belum approve, beri pesan atau tangani sesuai kebutuhan
+                            Toast.makeText(this@MainActivity5, "Data belum di-approve dan tidak dapat ditampilkan.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     // Menangani error
-//                    Toast.makeText(this@MainActivity5, "Gagal memuat data: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
-
         }
     }
 
@@ -203,6 +217,19 @@ class MainActivity5 : AppCompatActivity() {
         super.onBackPressed()
         finish() // Pastikan Activity ditutup sepenuhnya
     }
+
+    private fun showDataNotFoundDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Data anda belum ada, silahkan mendaftar terlebih dahulu.")
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, id ->
+                finish()  // Finish the activity when "OK" is clicked
+            }
+
+        val alert = builder.create()
+        alert.show()
+    }
+
 
     private fun generatePdf(nama: String, nisn: String, nik: String, kelamin: String,
                             tempatTanggal: String, ortu: String, alamat: String, kota: String,

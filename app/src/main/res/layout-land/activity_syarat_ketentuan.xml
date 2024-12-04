@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/background"
+    tools:context=".syarat_ketentuan">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBack"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:clickable="true"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_arrow_back_24" />
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="50dp"
+            android:layout_marginTop="-50dp"
+            style="@style/utama">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Syarat dan Ketentuan"
+                    android:textAlignment="center"
+                    android:textColor="#F9F7F7"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/text"
+                android:text="Syarat dan Ketentuan Pendaftaran PPDB Online"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dengan menggunakan layanan pendaftaran PPDB online, pengguna dianggap telah membaca, memahami, dan menyetujui semua syarat dan ketentuan yang tercantum berikut ini:"
+                android:textSize="15sp"
+                style="@style/text"
+                android:layout_marginTop="5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Ketentuan Umum"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                style="@style/text"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Pendaftaran dilakukan secara online melalui aplikasi PPDB resmi."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Semua data yang dimasukkan harus benar, akurat, dan dapat dipertanggungjawabkan."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Proses pendaftaran hanya berlaku dalam jangka waktu yang telah ditentukan oleh sekolah."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Kelengkapan Berkas"
+                android:textStyle="bold"
+                style="@style/text"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Peserta wajib mengunggah dokumen berikut:"
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Fotokopi Kartu Keluarga (KK)."
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Fotokopi Akta Kelahiran."
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Rapor semester terakhir."
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Sertifikat pendukung (opsional)."
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Dokumen harus diunggah dalam format PDF, JPG, atau PNG, dengan ukuran maksimal 2 MB per file."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Dokumen yang tidak jelas, tidak sesuai, atau tidak lengkap akan mengakibatkan pendaftaran tidak diproses."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Penggunaan Data Pribadi"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                style="@style/text"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Data pribadi yang dikumpulkan digunakan hanya untuk keperluan proses PPDB."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Sekolah menjamin kerahasiaan data pribadi peserta sesuai dengan kebijakan privasi yang berlaku."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Peserta bertanggung jawab untuk menjaga kerahasiaan akun mereka, termasuk kata sandi."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Proses Seleksi"
+                android:textStyle="bold"
+                style="@style/text"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Seleksi dilakukan berdasarkan kriteria yang telah ditetapkan, seperti:"
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="- Nilai akademik."
+                style="@style/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="- Prestasi non-akademik."
+                style="@style/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="- Zonasi (jika berlaku)."
+                style="@style/text"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Keputusan panitia seleksi bersifat mutlak dan tidak dapat diganggu gugat."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Ketentuan Tambahan"
+                android:textStyle="bold"
+                style="@style/text"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Peserta wajib mematuhi semua ketentuan yang berlaku selama proses pendaftaran hingga pengumuman hasil seleksi."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Jika ditemukan pelanggaran atau manipulasi data, peserta akan didiskualifikasi."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Dengan mengunggah dokumen, peserta menyatakan bahwa dokumen tersebut asli dan bukan hasil rekayasa."
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="> Bantuan dan Informasi"
+                android:textStyle="bold"
+                style="@style/text"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Untuk pertanyaan lebih lanjut, peserta dapat menghubungi kontak resmi panitia PPDB melalui:"
+                android:layout_marginLeft="10dp"
+                style="@style/text"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Email: ppdb@sekolahku.ac.id"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                style="@style/text"
+                android:text="- Nomor telepon: 0812-3456-7890"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#8E8E8E"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dengan melanjutkan proses pendaftaran, peserta menyetujui semua syarat dan ketentuan ini. Harap baca dengan seksama sebelum melanjutkan."
+                android:textSize="15sp"
+                style="@style/text"
+                android:layout_marginTop="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout><!-- TextView dinamis akan ditambahkan di sini -->
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

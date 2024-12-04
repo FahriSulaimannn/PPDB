@@ -13,6 +13,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -26,6 +30,9 @@ class Page1Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_page1, container, false)
+
+        setStatusBarColor(R.color.black)
+        setStatusBarTextDark(false)
 
         val etName = view.findViewById<EditText>(R.id.et_name)
         val etNISN = view.findViewById<EditText>(R.id.et_nisn)
@@ -63,28 +70,38 @@ class Page1Fragment : Fragment() {
         }
 
         btnLanjutkan.setOnClickListener {
+            val nisn = etNISN.text.toString()
+            val nik = etNIK.text.toString()
+
             if (validateFields(etNISN, etNIK, etTelp, etName, etTglLahir, etTmpLahir, etOrtu, etAlamat, etKota, etAsalSekolah, etDrive, etDrive2, etDrive3) &&
                 validateSpinner(etAgama) && validateRadioGroup(kelamin, tvLabelGender)) {
 
-                // Simpan data ke ViewModel
-                formViewModel.name.value = etName.text.toString()
-                formViewModel.nisn.value = etNISN.text.toString()
-                formViewModel.nik.value = etNIK.text.toString()
-                formViewModel.gender.value = if (etLaki.isChecked) "Laki-laki" else "Perempuan"
-                formViewModel.birthdate.value = etTglLahir.text.toString()
-                formViewModel.birthPlace.value = etTmpLahir.text.toString()
-                formViewModel.parentName.value = etOrtu.text.toString()
-                formViewModel.address.value = etAlamat.text.toString()
-                formViewModel.city.value = etKota.text.toString()
-                formViewModel.phone.value = etTelp.text.toString()
-                formViewModel.schoolOrigin.value = etAsalSekolah.text.toString()
-                formViewModel.religion.value = etAgama.selectedItem.toString()
-                formViewModel.driveKK.value = etDrive.text.toString()
-                formViewModel.driveAkta.value = etDrive2.text.toString()
-                formViewModel.driveFoto.value = etDrive3.text.toString()
+                checkUniqueNISNAndNIK(nisn, nik) { isUnique, errorMessage ->
+                    if (isUnique) {
+                        // Simpan data ke ViewModel
+                        formViewModel.name.value = etName.text.toString()
+                        formViewModel.nisn.value = nisn
+                        formViewModel.nik.value = nik
+                        formViewModel.gender.value = if (etLaki.isChecked) "Laki-laki" else "Perempuan"
+                        formViewModel.birthdate.value = etTglLahir.text.toString()
+                        formViewModel.birthPlace.value = etTmpLahir.text.toString()
+                        formViewModel.parentName.value = etOrtu.text.toString()
+                        formViewModel.address.value = etAlamat.text.toString()
+                        formViewModel.city.value = etKota.text.toString()
+                        formViewModel.phone.value = etTelp.text.toString()
+                        formViewModel.schoolOrigin.value = etAsalSekolah.text.toString()
+                        formViewModel.religion.value = etAgama.selectedItem.toString()
+                        formViewModel.driveKK.value = etDrive.text.toString()
+                        formViewModel.driveAkta.value = etDrive2.text.toString()
+                        formViewModel.driveFoto.value = etDrive3.text.toString()
 
-                // Navigasi ke halaman kedua
-                (activity as MainActivity4).navigateToPage2()
+                        // Navigasi ke halaman kedua
+                        (activity as MainActivity4).navigateToPage2()
+                    } else {
+                        // Tampilkan pesan error
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
@@ -292,6 +309,65 @@ class Page1Fragment : Fragment() {
         datePickerDialog.datePicker.maxDate = maxDateCalendar.timeInMillis
 
         datePickerDialog.show()
+    }
+
+    private fun checkUniqueNISNAndNIK(
+        nisn: String,
+        nik: String,
+        onResult: (isUnique: Boolean, errorMessage: String?) -> Unit
+    ) {
+        val database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users")
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var nisnExists = false
+                var nikExists = false
+
+                for (child in snapshot.children) {
+                    val userNisn = child.child("nisn").getValue(String::class.java)
+                    val userNik = child.child("nik").getValue(String::class.java)
+
+                    if (userNisn == nisn) {
+                        nisnExists = true
+                    }
+                    if (userNik == nik) {
+                        nikExists = true
+                    }
+
+                    // Jika kedua data ditemukan, hentikan pencarian lebih awal
+                    if (nisnExists && nikExists) break
+                }
+
+                when {
+                    nisnExists && nikExists -> onResult(false, "NISN dan NIK sudah terdaftar.")
+                    nisnExists -> onResult(false, "NISN sudah terdaftar.")
+                    nikExists -> onResult(false, "NIK sudah terdaftar.")
+                    else -> onResult(true, null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onResult(false, "Gagal memeriksa data: ${error.message}")
+            }
+        })
+    }
+
+    private fun setStatusBarColor(colorResId: Int) {
+        activity?.window?.let { window ->
+            window.statusBarColor = ContextCompat.getColor(requireContext(), colorResId)
+        }
+    }
+
+    private fun setStatusBarTextDark(isDark: Boolean) {
+        val decorView = activity?.window?.decorView
+        if (decorView != null) {
+            val flags = decorView.systemUiVisibility
+            decorView.systemUiVisibility = if (isDark) {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            }
+        }
     }
 
 

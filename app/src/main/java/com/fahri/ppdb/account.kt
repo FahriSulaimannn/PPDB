@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -63,7 +64,31 @@ class account : ComponentActivity() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null) {
             loadUserProfile(firebaseUser)
-            textFullName.text = firebaseUser.displayName
+
+            // Referensi ke database
+            val databaseReference = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("admin") // Node admin untuk mendeteksi apakah user adalah admin
+            val userId = firebaseUser.uid
+
+            // Periksa apakah user adalah admin
+            databaseReference.child(userId).get().addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    // Jika user adalah admin, ambil nama dari database
+                    val adminName = snapshot.child("name").value?.toString()
+                    if (!adminName.isNullOrEmpty()) {
+                        textFullName.text = adminName // Tampilkan nama admin
+                    } else {
+                        textFullName.text = "Admin" // Default jika nama admin tidak tersedia
+                    }
+                } else {
+                    // Jika bukan admin, gunakan nama dari Firebase Authentication
+                    textFullName.text = firebaseUser.displayName
+                }
+            }.addOnFailureListener {
+                // Gagal mengambil data admin, fallback ke FirebaseAuth
+                textFullName.text = firebaseUser.displayName
+            }
+
             textEmail.text = firebaseUser.email
 
             // Check if user logged in with email and password
@@ -77,6 +102,7 @@ class account : ComponentActivity() {
             finish()
         }
 
+
         // Configure Google Sign-In options
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -86,7 +112,7 @@ class account : ComponentActivity() {
 
         // Logout Button click listener
         btnLogout.setOnClickListener {
-            logoutAndClearData()
+            showLogoutConfirmationDialog()
         }
 
         // Edit profile dialog
@@ -208,6 +234,21 @@ class account : ComponentActivity() {
         }
     }
 
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Konfirmasi Logout")
+            .setMessage("Apakah Anda yakin ingin logout?")
+            .setPositiveButton("Ya") { dialog, _ ->
+                logoutAndClearData() // Melakukan logout jika pengguna mengonfirmasi
+                dialog.dismiss()
+            }
+            .setNegativeButton("Tidak") { dialog, _ ->
+                dialog.dismiss() // Menutup dialog tanpa logout
+            }
+            .create()
+            .show()
+    }
+
 
     private fun logoutAndClearData() {
         firebaseAuth.signOut()
@@ -216,6 +257,7 @@ class account : ComponentActivity() {
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
             googleSignInClient.signOut().addOnCompleteListener(this) {
                 clearProfileData() // Clear profile data (reset profile image, etc.)
+                clearSessionDataExceptDate() // Clear session data, except saved date
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -225,12 +267,33 @@ class account : ComponentActivity() {
         }
     }
 
-
-
     private fun clearProfileData() {
         textFullName.text = "Nama Pengguna"
         textEmail.text = "Email Pengguna"
-        profileImageView.setImageResource(R.drawable.profile)  // Set to default profile image
+        profileImageView.setImageResource(R.drawable.profile) // Set to default profile image
+    }
+
+    private fun clearSessionDataExceptDate() {
+        // Akses SharedPreferences
+        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        // Ambil data tanggal yang perlu disimpan
+        val startDate = sharedPref.getString("start_date", null)
+        val endDate = sharedPref.getString("end_date", null)
+
+        // Hapus semua data kecuali data tanggal
+        editor.clear()
+
+        // Kembalikan data tanggal ke SharedPreferences
+        startDate?.let { editor.putString("start_date", it) }
+        endDate?.let { editor.putString("end_date", it) }
+
+        // Kembalikan data lain yang perlu disimpan, seperti saved_date
+        val savedDate = sharedPref.getString("saved_date", null)
+        savedDate?.let { editor.putString("saved_date", it) }
+
+        editor.apply()
     }
 
     private fun showChangePasswordDialog(firebaseUser: FirebaseUser?) {

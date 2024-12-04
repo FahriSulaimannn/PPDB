@@ -29,30 +29,33 @@ data class User(
     var status: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        id = parcel.readString() ?: "",
+        name = parcel.readString() ?: "",
+        nisn = parcel.readString() ?: "",
+        address = parcel.readString() ?: "",
+        birthPlace = parcel.readString() ?: "",
+        birthdate = parcel.readString() ?: "",
+        city = parcel.readString() ?: "",
+        driveAkta = parcel.readString() ?: "",
+        driveFoto = parcel.readString() ?: "",
+        driveFotoIjazah = parcel.readString() ?: "",
+        driveFotoSertif = parcel.readString() ?: "",
+        driveKK = parcel.readString() ?: "",
+        gender = parcel.readString() ?: "",
+        nik = parcel.readString() ?: "",
+        nilaiIPA = parcel.readString() ?: "",
+        nilaiIndo = parcel.readString() ?: "",
+        nilaiIng = parcel.readString() ?: "",
+        nilaiMat = parcel.readString() ?: "",
+        parentName = parcel.readString() ?: "",
+        phone = parcel.readString() ?: "",
+        religion = parcel.readString() ?: "",
+        schoolOrigin = parcel.readString() ?: "",
+        status = parcel.readString() ?: ""
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeString(nisn)
         parcel.writeString(address)
@@ -84,4 +87,3 @@ data class User(
         override fun newArray(size: Int): Array<User?> = arrayOfNulls(size)
     }
 }
-

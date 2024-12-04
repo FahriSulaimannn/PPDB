@@ -2,10 +2,14 @@ package com.fahri.ppdb
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +26,10 @@ class HasilPeringkatActivity : AppCompatActivity() {
     private val itemList = mutableListOf<ModelPeringkat>()
     private lateinit var binding: ActivityHasilPeringkatBinding
 
+    companion object {
+        private const val TOTAL_TARGET = 35 // Jumlah tetap
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,7 +45,7 @@ class HasilPeringkatActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null) {
             Toast.makeText(this, "Harap login terlebih dahulu", Toast.LENGTH_SHORT).show()
-            finish() // Kembali ke layar sebelumnya jika belum login
+            finish()
             return
         }
 
@@ -54,6 +62,24 @@ class HasilPeringkatActivity : AppCompatActivity() {
         // Ambil data hanya jika pengguna sudah login
         fetchData()
 
+        val etSearch = binding.etSearch
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterList(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+        // Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            finish()
+        }
+
+        recyclerView.isNestedScrollingEnabled = false
+
         // Menambahkan inset untuk sistem bar
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -66,7 +92,9 @@ class HasilPeringkatActivity : AppCompatActivity() {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 itemList.clear()
-                var index = 1 // Inisialisasi nomor urut
+                var approvedCount = 0
+                var index = 1
+
                 for (dataSnapshot in snapshot.children) {
                     val name = dataSnapshot.child("name").getValue(String::class.java)
                     val status = dataSnapshot.child("status").getValue(String::class.java)
@@ -75,25 +103,47 @@ class HasilPeringkatActivity : AppCompatActivity() {
                     val nilaiIng = dataSnapshot.child("nilaiIng").getValue(String::class.java)?.toDoubleOrNull() ?: 0.0
                     val nilaiMat = dataSnapshot.child("nilaiMat").getValue(String::class.java)?.toDoubleOrNull() ?: 0.0
 
-                    // Hanya tambahkan ke daftar jika status "approve"
-                    if (name != null && status == "approve") {
-                        val totalNilai = nilaiIPA + nilaiIndo + nilaiIng + nilaiMat
-                        val rataRataNilai = totalNilai / 4
-                        val rataRataFormatted = String.format("%.2f", rataRataNilai)
+                    if (name != null) {
+                        if (status == "approve") {
+                            approvedCount++
+                            val totalNilai = nilaiIPA + nilaiIndo + nilaiIng + nilaiMat
+                            val rataRataNilai = totalNilai / 4
+                            val rataRataFormatted = String.format("%.2f", rataRataNilai)
 
-                        // Tambahkan nomor urut sebelum nama
-                        val item = ModelPeringkat("$index. $name", rataRataFormatted)
-                        itemList.add(item)
-
-                        index++ // Tingkatkan nomor urut
+                            val item = ModelPeringkat("$index. $name", " Nilai : $rataRataFormatted")
+                            itemList.add(item)
+                            index++
+                        }
                     }
                 }
+
+                // Perbarui data di adapter
                 adapterPeringkat.updateData(itemList)
+
+                // Perbarui informasi header di TextView
+                val approveCountText = "Jumlah Pendaftar : $approvedCount/$TOTAL_TARGET"
+                binding.jumlah.text = approveCountText
+
+                // Tampilkan/hilangkan pesan jika tidak ada data
+                if (itemList.isEmpty()) {
+                    binding.recyclerViewPeringkat.visibility = View.GONE
+                    binding.tvNoData.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerViewPeringkat.visibility = View.VISIBLE
+                    binding.tvNoData.visibility = View.GONE
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("HasilPeringkatActivity", "Failed to fetch data", error.toException())
             }
         })
+    }
+
+    private fun filterList(query: String) {
+        val filteredList = itemList.filter {
+            it.name?.contains(query, ignoreCase = true) == true
+        }
+        adapterPeringkat.updateData(filteredList)
     }
 }

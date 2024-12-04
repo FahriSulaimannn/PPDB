@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -112,6 +113,13 @@ class LoginActivity : AppCompatActivity() {
 
         txtRegister.setOnClickListener{
             startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+        // Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            finish() // Menutup activity sepenuhnya
         }
 
 

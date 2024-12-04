@@ -50,6 +50,14 @@ class cara9 : Fragment() {
             startActivity(intent)
         }
 
+        // Ambil CardView dari layout
+        val backHomeCardView: CardView = view.findViewById(R.id.backHome)
+
+        // Set OnClickListener untuk menutup Activity
+        backHomeCardView.setOnClickListener {
+            requireActivity().finish()
+        }
+
         return view
     }
 

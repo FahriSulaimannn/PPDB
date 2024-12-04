@@ -54,12 +54,15 @@ class Page2Fragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_page2, container, false)
 
+        setStatusBarColor(R.color.black)
+        setStatusBarTextDark(false)
+
         val etNilaiIndo = view.findViewById<EditText>(R.id.et_nilaiIndo)
         val etNilaiIng = view.findViewById<EditText>(R.id.et_nilaiIng)
         val etNilaiMat = view.findViewById<EditText>(R.id.et_nilaiMat)
         val etNilaiIPA = view.findViewById<EditText>(R.id.et_nilaiIPA)
-        val etfotoSertif = view.findViewById<EditText>(R.id.et_fotoIjazah)
-        val etfotoIjazah = view.findViewById<EditText>(R.id.et_fotoSertif)
+        val etfotoIjazah = view.findViewById<EditText>(R.id.et_fotoIjazah)
+        val etfotoSertif = view.findViewById<EditText>(R.id.et_fotoSertif)
         val btnSubmit = view.findViewById<Button>(R.id.btn_submit)
         val cvBack = view.findViewById<CardView>(R.id.cvBack)
 
@@ -118,6 +121,21 @@ class Page2Fragment : Fragment() {
                     etfotoIjazah.error = "Masukkan link Google Drive yang valid"
                 } else {
                     etfotoIjazah.error = null
+                }
+            }
+        })
+
+        etfotoSertif.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val googleDrivePattern = "https://drive\\.google\\.com/.*".toRegex()
+                if (!googleDrivePattern.matches(s.toString())) {
+                    etfotoSertif.error = "Masukkan link Google Drive yang valid"
+                } else {
+                    etfotoSertif.error = null
                 }
             }
         })
@@ -203,8 +221,8 @@ class Page2Fragment : Fragment() {
         val googleDriveLink1 = formViewModel.driveKK.value
         val googleDriveLink2 = formViewModel.driveAkta.value
         val googleDriveLink3 = formViewModel.driveFoto.value
-        val googleDriveLink4 = formViewModel.driveAkta.value
-        val googleDriveLink5 = formViewModel.driveKK.value
+        val googleDriveLink4 = formViewModel.driveIjazah.value
+        val googleDriveLink5 = formViewModel.driveSertif.value
 
         val formattedLink1 = formatGoogleDriveLink(googleDriveLink1)
         val formattedLink2 = formatGoogleDriveLink(googleDriveLink2)
@@ -359,6 +377,24 @@ class Page2Fragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, nextFragment)
             .commit()  // Tidak menambahkan ke back stack
+    }
+
+    private fun setStatusBarColor(colorResId: Int) {
+        activity?.window?.let { window ->
+            window.statusBarColor = ContextCompat.getColor(requireContext(), colorResId)
+        }
+    }
+
+    private fun setStatusBarTextDark(isDark: Boolean) {
+        val decorView = activity?.window?.decorView
+        if (decorView != null) {
+            val flags = decorView.systemUiVisibility
+            decorView.systemUiVisibility = if (isDark) {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            }
+        }
     }
 
     companion object {

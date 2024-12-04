@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,6 +21,7 @@ class BaeritaActivityAdmin : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AdapterBeritaAdmin
     private lateinit var database: DatabaseReference
+    private lateinit var teks: TextView
     private val dataList = mutableListOf<ModelBeritaAdmin>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +38,7 @@ class BaeritaActivityAdmin : AppCompatActivity() {
             intent.putExtra("beritaId", berita.id) // Kirim ID berita ke Activity Edit
             intent.putExtra("judul", berita.judul)
             intent.putExtra("isi", berita.isi)
+            intent.putExtra("lokasi", berita.lokasi)
             intent.putExtra("tanggal", berita.tanggal)
             startActivity(intent)
         }
@@ -50,6 +55,16 @@ class BaeritaActivityAdmin : AppCompatActivity() {
             startActivity(intent)
         }
 
+        recyclerView.isNestedScrollingEnabled = false
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+        // Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            finish() // Menutup activity sepenuhnya
+        }
+
+        teks = findViewById(R.id.tvEmptyMessage)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -74,6 +89,10 @@ class BaeritaActivityAdmin : AppCompatActivity() {
                 }
 
                 adapter.notifyDataSetChanged()
+
+                // Atur visibilitas pesan kosong
+                val isDataEmpty = dataList.isEmpty()
+                teks.visibility = if (isDataEmpty) View.VISIBLE else View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Border -->
+    <stroke
+        android:color="#000000"
+        android:width="1dp" />
+
+    <!-- Sudut yang membulat -->
+    <corners android:radius="10dp" /> <!-- Radius sudut -->
+
+    <!-- Background dalam CardView menggunakan warna dari tema -->
+    <solid android:color="#E3E3E3"/> <!-- Ganti dengan nama warna sesuai tema -->
+</shape>

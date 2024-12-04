@@ -2,6 +2,7 @@ package com.fahri.ppdb
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -60,10 +62,13 @@ class MainActivity : AppCompatActivity() {
 
         val accountImageView = findViewById<ImageView>(R.id.account)
 
+        val greetingTextView = findViewById<TextView>(R.id.greeting)
+
         // Cek apakah user sudah login
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser != null) {
             // Muat gambar profil pengguna ke accountImageView
+            greetingTextView.text = firebaseUser.displayName
             val profilePhotoUrl = firebaseUser.photoUrl
             profilePhotoUrl?.let {
                 Glide.with(this)
@@ -76,6 +81,13 @@ class MainActivity : AppCompatActivity() {
 
         accountImageView.setOnClickListener {
             val intent = Intent(this, account::class.java)
+            startActivity(intent)
+        }
+
+        val chat: View = findViewById(R.id.chat)
+        chat.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://wa.me/6285607404143")
             startActivity(intent)
         }
 
@@ -119,63 +131,50 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Mengatur view dan listener
-        val cv7: View = findViewById(R.id.Cv7)
-        cv7.setOnClickListener {
-            // Debug untuk mengetahui apakah onClick dijalankan
-            Log.d("DEBUG", "cv7 button clicked")
+        val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val startDateString = sharedPreferences.getString("start_date", null)
+        val endDateString = sharedPreferences.getString("end_date", null)
 
-            checkUserCount { userCount ->
-                val firebaseUser = firebaseAuth.currentUser
+        Log.d("SharedPreferences", "Start Date: $startDateString, End Date: $endDateString")
 
-                if (firebaseUser == null) {
-                    // Debug user belum login
-                    Log.d("DEBUG", "User belum login")
+        val startDate = startDateString?.let { LocalDate.parse(it) }
+        val endDate = endDateString?.let { LocalDate.parse(it) }
 
-                    if (userCount >= 4) {
-                        // Data penuh
-                        Log.d("DEBUG", "Data penuh, menampilkan dialog pendaftaran penuh")
-                        showFullRegistrationDialog()
-                    } else {
-                        // Data masih bisa diisi
-                        Log.d("DEBUG", "Data tersedia, menampilkan dialog login")
-                        showLoginDialog()
-                    }
-                } else {
-                    // Debug user sudah login
-                    Log.d("DEBUG", "User sudah login")
+        val currentDate = LocalDate.now()
+        val cv7: View = findViewById(R.id.Cv7) // Tombol atau View yang akan diaktifkan/dinonaktifkan
 
-                    if (userCount >= 4) {
-                        // Data penuh
-                        checkUserData(firebaseUser.uid) { hasData ->
-                            if (hasData) {
-                                // Sudah mendaftar
-                                Log.d("DEBUG", "User sudah mendaftar, menuju MainActivity4")
-                                navigateToMainActivity4()
-                            } else {
-                                // Belum mendaftar
-                                Log.d("DEBUG", "User belum mendaftar, menampilkan dialog pendaftaran penuh")
-                                showFullRegistrationDialog()
-                            }
-                        }
-                    } else {
-                        // Data masih bisa diisi
-                        checkUserData(firebaseUser.uid) { hasData ->
-                            if (hasData) {
-                                // Sudah mendaftar
-                                Log.d("DEBUG", "User sudah mendaftar, menuju MainActivity4")
-                                navigateToMainActivity4()
-                            } else {
-                                // Belum mendaftar
-                                Log.d("DEBUG", "User belum mendaftar, menuju MainActivity4")
-                                navigateToMainActivity4()
-                            }
-                        }
-                    }
+// Tombol tetap diaktifkan, hanya beri efek jika tanggal di luar rentang
+        if (startDate != null && endDate != null) {
+            if (currentDate !in startDate..endDate) {
+                cv7.alpha = 0.5f // Ubah transparansi tombol
+                cv7.setOnClickListener {
+                    showRegistrationClosedDialog() // Tampilkan dialog jika pendaftaran sudah tutup
                 }
+            } else {
+                cv7.alpha = 1f // Kembalikan transparansi tombol normal
+                cv7.setOnClickListener {
+                    // Proses normal ketika tanggal masih dalam rentang
+                    handleButtonClick()
+                }
+            }
+        } else {
+            cv7.alpha = 0.5f // Ubah transparansi tombol jika tidak ada tanggal
+            cv7.setOnClickListener {
+                showRegistrationClosedDialog() // Tampilkan dialog jika pendaftaran sudah tutup
             }
         }
 
+        val cvJ: View = findViewById(R.id.cardJadwal)
+        cvJ.setOnClickListener {
+            val intent = Intent(this, BeritaActivity::class.java)
+            startActivity(intent)
+        }
+
+        val cvS: View = findViewById(R.id.cardSyarat)
+        cvS.setOnClickListener {
+            val intent = Intent(this, syarat_ketentuan::class.java)
+            startActivity(intent)
+        }
 
         val cv4: View = findViewById(R.id.Cv4)
         cv4.setOnClickListener {
@@ -217,6 +216,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val Alamat: View = findViewById(R.id.lokasi)
+        Alamat.setOnClickListener {
+            val intent = Intent(this, AlamatActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // Dalam Activity atau Fragment
 //        val accountImageView = findViewById<ImageView>(R.id.account)
@@ -226,6 +231,52 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
+    }
+
+    private fun showRegistrationClosedDialog() {
+        // Menampilkan dialog untuk memberitahukan bahwa pendaftaran sudah tutup
+        AlertDialog.Builder(this)
+            .setTitle("Pendaftaran Tutup")
+            .setMessage("Pendaftaran sudah tutup. Mohon tunggu periode pendaftaran berikutnya.")
+            .setPositiveButton("OK", null)
+            .show()
+    }
+
+    private fun handleButtonClick() {
+        // Menangani logika normal untuk tombol
+        checkUserCount { userCount ->
+            val firebaseUser = firebaseAuth.currentUser
+
+            if (firebaseUser == null) {
+                // User belum login
+                Log.d("DEBUG", "User belum login")
+                if (userCount >= 35) {
+                    showFullRegistrationDialog()
+                } else {
+                    showLoginDialog()
+                }
+            } else {
+                // User sudah login
+                Log.d("DEBUG", "User sudah login")
+                if (userCount >= 35) {
+                    checkUserData(firebaseUser.uid) { hasData ->
+                        if (hasData) {
+                            navigateToMainActivity4()
+                        } else {
+                            showFullRegistrationDialog()
+                        }
+                    }
+                } else {
+                    checkUserData(firebaseUser.uid) { hasData ->
+                        if (hasData) {
+                            navigateToMainActivity4()
+                        } else {
+                            navigateToMainActivity4()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun navigateToMainActivity4() {

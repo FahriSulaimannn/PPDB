@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class UserAdapter(
+    private val context: android.content.Context, // Tambahkan context
     private val userList: List<User>,
+    private val onItemClick: (User) -> Unit,
     private val onApproveClick: (User) -> Unit,
     private val onCancelClick: (User) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -37,8 +39,24 @@ class UserAdapter(
             holder.btnApprove.visibility = View.VISIBLE // Tampilkan jika belum disetujui
         }
 
+        // Panggil fungsi klik item saat card ditekan
+        holder.itemView.setOnClickListener { onItemClick(user) }
+
         holder.btnApprove.setOnClickListener { onApproveClick(user) }
-        holder.btnCancel.setOnClickListener { onCancelClick(user) }
+        // AlertDialog untuk konfirmasi hapus
+        holder.btnCancel.setOnClickListener {
+            android.app.AlertDialog.Builder(context)
+                .setTitle("Konfirmasi")
+                .setMessage("Apakah kamu yakin untuk menghapus?")
+                .setPositiveButton("Ya") { dialog, _ ->
+                    onCancelClick(user) // Panggil fungsi hapus
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Tidak") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     override fun getItemCount(): Int = userList.size

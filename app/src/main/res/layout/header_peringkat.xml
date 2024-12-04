@@ -1,10 +1,32 @@
-<!-- res/layout/header_peringkat.xml -->
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:text="Daftar Peringkat"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:gravity="center"/>
+    android:weightSum="2">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:text="Nama Siswa"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        style="@style/text"
+        android:textAlignment="textStart"/>
+
+    <TextView
+        android:id="@+id/jumlah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:textAlignment="textEnd"
+        android:text="1/350"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        style="@style/text"/>
+
+
+</LinearLayout>

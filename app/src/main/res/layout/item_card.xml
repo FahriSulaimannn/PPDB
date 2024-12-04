@@ -2,7 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="15dp"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,6 +59,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
                 android:text="Setuju"
+                android:textColor="#FFFFFF"
                 android:backgroundTint="#4CAF50" />
 
             <Button
@@ -66,6 +69,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:text="Batalkan"
+                android:textColor="#FFFFFF"
                 android:backgroundTint="#F44336" />
 
         </LinearLayout>

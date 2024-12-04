@@ -1,16 +1,21 @@
 package com.fahri.ppdb
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class SiswaMendaftar : AppCompatActivity() {
@@ -20,11 +25,12 @@ class SiswaMendaftar : AppCompatActivity() {
     private lateinit var etSearch: EditText
     private val database = FirebaseDatabase.getInstance("https://coba-2db4c-default-rtdb.asia-southeast1.firebasedatabase.app").reference
 
-    private val userList = mutableListOf<User>() // List utama untuk menyimpan semua data
+    private val userList = mutableListOf<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_siswa_mendaftar)
+        enableEdgeToEdge()
 
         recyclerView = findViewById(R.id.recyclerView)
         etSearch = findViewById(R.id.etSearch)
@@ -32,7 +38,15 @@ class SiswaMendaftar : AppCompatActivity() {
 
         fetchData()
 
-        // Tambahkan listener untuk input pencarian
+        recyclerView.isNestedScrollingEnabled = false
+
+        val cvBack = findViewById<CardView>(R.id.cvBack)
+
+        // Handle tombol kembali menggunakan CardView
+        cvBack.setOnClickListener {
+            finish() // Menutup activity sepenuhnya
+        }
+
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -40,6 +54,12 @@ class SiswaMendaftar : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 
     private fun fetchData() {
@@ -51,12 +71,11 @@ class SiswaMendaftar : AppCompatActivity() {
                 for (userSnapshot in snapshot.children) {
                     val user = userSnapshot.getValue(User::class.java)
                     if (user != null) {
-                        user.id = userSnapshot.key ?: "" // Assign key as ID
+                        user.id = userSnapshot.key ?: ""
                         userList.add(user)
                     }
                 }
 
-                // Urutkan daftar berdasarkan status (belum approve di atas)
                 val sortedList = userList.sortedBy { it.status == "approve" }
                 setupAdapter(sortedList)
             }
@@ -69,7 +88,9 @@ class SiswaMendaftar : AppCompatActivity() {
 
     private fun setupAdapter(userList: List<User>) {
         userAdapter = UserAdapter(
-            userList,
+            context = this, // Tambahkan context
+            userList = userList,
+            onItemClick = { user -> navigateToDetail(user) },
             onApproveClick = { user -> approveUser(user) },
             onCancelClick = { user -> deleteUser(user) }
         )
@@ -81,6 +102,12 @@ class SiswaMendaftar : AppCompatActivity() {
             it.name.contains(query, ignoreCase = true) || it.nisn.contains(query, ignoreCase = true)
         }
         setupAdapter(filteredList)
+    }
+
+    private fun navigateToDetail(user: User) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("user", user) // Kirim objek User
+        startActivity(intent)
     }
 
     private fun approveUser(user: User) {
