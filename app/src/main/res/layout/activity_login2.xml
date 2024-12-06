@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/logoschool" />
+            android:src="@drawable/logoschooll" />
 
         <TextView
             android:layout_width="match_parent"
